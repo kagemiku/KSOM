@@ -22,11 +22,11 @@ for (int i = 0; i < length; i++ ) {
 3. Create matrix of model vector.   
 In mane cases, we use input vecor at random to initialize matrix of model vector.  
 
-3. Create instance of KSOM.  
+4. Create instance of KSOM.  
 KSOM's constructor requires the following values.    
 
 | name | description |
-| ----- | ----- |
+|:-----: |:----- |
 | src | array of input vector |
 | length | length of src |
 | map | matrix of model vector |
@@ -36,7 +36,7 @@ KSOM's constructor requires the following values.
 | alpha0 | initial value of alpha |
 | sigma0 | initial value of sigma |
 
-4. Call KSOM::calcIterate() method.  
+5. Call KSOM::calcIterate() method.  
 
 # Example
 Please look at the source file **Main.cpp** in examples.  
