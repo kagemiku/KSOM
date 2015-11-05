@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <cstring>
 
 
 template <typename T>
@@ -48,7 +49,7 @@ Node<T>::Node(int size)
 	:size_(size) 
 { 
 	elems_ = new T[size_];
-	memset(elems_, 0, sizeof(elems_));
+    std::memset(elems_, 0, sizeof(elems_));
 } 
 
 
