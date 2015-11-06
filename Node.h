@@ -34,6 +34,8 @@ public:
 	Node<T>& operator-=(T val);
 	Node<T>& operator*=(const Node<T>& rhs);
 	Node<T>& operator*=(T val);
+	Node<T>& operator/=(const Node<T>& rhs);
+	Node<T>& operator/=(T val);
 	T& operator[](int idx) const;
 	void setElem(T elem, int idx);
 	T elem(int idx) const;
@@ -308,6 +310,40 @@ Node<T>& Node<T>::operator*=(T val)
 
 	return *this;
 }
+
+
+template <typename T>
+Node<T>& Node<T>::operator/=(const Node& rhs)
+{
+	if ( size_ != rhs.size_ ) {
+		throw std::string("different size");
+	}
+
+	for ( int i = 0; i < size_; i++ ) {
+		if ( rhs.elems_[i] == 0 ) {
+			throw std::string("divided by zero");
+		}
+		elems_[i] /= rhs.elems_[i];
+	}
+
+	return *this;
+}
+
+
+template <typename T>
+Node<T>& Node<T>::operator/=(T val)
+{
+	if ( val == 0 ) {
+		throw std::string("divided by zero");
+	}
+
+	for ( int i = 0; i < size_; i++ ) {
+		elems_[i] /= val;
+	}
+
+	return *this;
+}
+
 
 template <typename T>
 T& Node<T>::operator[](int idx) const
