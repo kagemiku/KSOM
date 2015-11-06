@@ -23,6 +23,8 @@ public:
 	Node<T> operator+(T val) const;
 	Node<T> operator-(const Node<T>& rhs) const;
 	Node<T> operator-(T val) const;
+	Node<T> operator*(const Node<T>& rhs) const;
+	Node<T> operator*(T val) const;
 	Node<T>& operator=(const Node<T>& rhs);
 	Node<T>& operator+=(const Node<T>& rhs);
 	Node<T>& operator+=(T val);
@@ -140,6 +142,34 @@ Node<T> Node<T>::operator-(T val) const
 	Node<T> node(size_);
 	for ( int i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] - val;
+	}
+
+	return node;
+}
+
+
+template <typename T>
+Node<T> Node<T>::operator*(const Node& rhs) const
+{
+	if ( size_ != rhs.size_ ) {
+		throw std::string("different size");
+	}
+
+	Node<T> node(size_);
+	for ( int i = 0; i < size_; i++ ) {
+		node.elems_[i] = this->elems_[i] * rhs.elems_[i];
+	}
+
+	return node;
+}
+
+
+template <typename T>
+Node<T> Node<T>::operator*(T val) const
+{
+	Node<T> node(size_);
+	for ( int i = 0; i < size_; i++ ) {
+		node.elems_[i] = this->elems_[i] * val;
 	}
 
 	return node;
