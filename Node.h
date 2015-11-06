@@ -191,7 +191,7 @@ Node<T> Node<T>::operator/(const Node& rhs) const
 
 	Node<T> node(size_);
 	for ( int i = 0; i < size_; i++ ) {
-		if ( rhs.elems_[i] == 0 ) {
+		if ( rhs.elems_[i] == static_cast<T>(0) ) {
 			throw std::string("divided by zero");
 		}
 		node.elems_[i] = this->elems_[i] / rhs.elems_[i];
@@ -204,7 +204,7 @@ Node<T> Node<T>::operator/(const Node& rhs) const
 template <typename T>
 Node<T> Node<T>::operator/(T val) const
 {
-	if ( val == 0 ) {
+	if ( val == static_cast<T>(0) ) {
 		throw std::string("divided by zero");
 	}
 
@@ -320,7 +320,7 @@ Node<T>& Node<T>::operator/=(const Node& rhs)
 	}
 
 	for ( int i = 0; i < size_; i++ ) {
-		if ( rhs.elems_[i] == 0 ) {
+		if ( rhs.elems_[i] == static_cast<T>(0) ) {
 			throw std::string("divided by zero");
 		}
 		elems_[i] /= rhs.elems_[i];
@@ -333,7 +333,7 @@ Node<T>& Node<T>::operator/=(const Node& rhs)
 template <typename T>
 Node<T>& Node<T>::operator/=(T val)
 {
-	if ( val == 0 ) {
+	if ( val == static_cast<T>(0) ) {
 		throw std::string("divided by zero");
 	}
 
