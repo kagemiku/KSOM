@@ -28,11 +28,11 @@ private:
 	int time_;
 	
 private:
-	double calcAlpha(int time);
-	double calcSigma(int time);
-	double calcH(double distance, int time);
-	double calcDistance(int x1, int y1, int x2, int y2);
-	double calcDistance(const Node<T>& node1, const Node<T>& node2); 
+	inline double calcAlpha(int time);
+	inline double calcSigma(int time);
+	inline double calcH(double distance, int time);
+	inline double calcDistance(int x1, int y1, int x2, int y2);
+	inline double calcDistance(const Node<T>& node1, const Node<T>& node2); 
  
 public:
 	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
