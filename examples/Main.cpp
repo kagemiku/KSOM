@@ -56,7 +56,7 @@ int main()
 	const double alpha0 = 0.1;
 	const double sigma0 = 20.0;
 	KSOM<int>* colorSOM = new KSOM<int>(src, length, map, rows, cols, length, alpha0, sigma0); 
-	while ( colorSOM->calcIterate() ) {
+	while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
 	}
 

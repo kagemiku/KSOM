@@ -38,7 +38,7 @@ public:
 	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
 	~KSOM();
 
-	bool calcIterate();
+	bool computeOnes();
 	int time() const; 
 };
 
@@ -106,7 +106,7 @@ double KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2)
 
 
 template <typename T>
-bool KSOM<T>::calcIterate()
+bool KSOM<T>::computeOnes()
 {
 	if ( time_ >= maxIterate_ ) {
 		return false;
