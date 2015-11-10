@@ -33,6 +33,8 @@ private:
 	inline auto calcH(double distance, int time) -> double;
 	inline auto calcDistance(int x1, int y1, int x2, int y2) -> double;
 	inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) -> double; 
+	inline auto findNearestNode(int idx, int& nearestRow, int& nearestCol) -> void;
+	inline auto learnNode(int idx, int nearestRow, int nearestCol) -> void;
  
 public:
 	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
@@ -107,13 +109,8 @@ auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) -> double
 
 
 template <typename T>
-auto KSOM<T>::computeOnes() -> bool
+auto KSOM<T>::findNearestNode(int idx, int& nearestRow, int& nearestCol) -> void
 {
-	if ( time_ >= maxIterate_ ) {
-		return false;
-	}
-
-    const auto idx = time_;
 	const Node<T>& refNode = src_[idx];
 	auto minDis = MAX_DISTANCE;
 	auto minDisRow = 0, minDisCol = 0;
@@ -127,11 +124,20 @@ auto KSOM<T>::computeOnes() -> bool
 			}
 		}
 	}
- 
+
+	nearestRow = minDisRow;
+	nearestCol = minDisCol;
+}
+
+
+template <typename T>
+auto KSOM<T>::learnNode(int idx, int nearestRow, int nearestCol) -> void
+{
+	const Node<T>& refNode = src_[idx];
 	const auto alpha = calcAlpha(time_);
 	for ( auto r = 0; r < rows_; r++ ) {
 		for ( auto c = 0; c < cols_; c++ ) {
-			const auto dis = calcDistance(r, c, minDisRow, minDisCol);
+			const auto dis = calcDistance(r, c, nearestRow, nearestCol);
 			const auto h = calcH(dis, time_);
 
 			for ( auto i = 0; i < dimension_; i++ ) {
@@ -139,7 +145,18 @@ auto KSOM<T>::computeOnes() -> bool
 			}
 		}
 	} 
+}
 
+template <typename T>
+auto KSOM<T>::computeOnes() -> bool
+{
+	if ( time_ >= maxIterate_ ) {
+		return false;
+	}
+ 
+	auto nearestRow = 0, nearestCol = 0;
+	findNearestNode(time_, nearestRow, nearestCol); 
+	learnNode(time_, nearestRow, nearestCol);
 	++time_;
     
 	return true;
