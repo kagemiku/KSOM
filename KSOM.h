@@ -36,7 +36,7 @@ private:
  
 public:
 	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
-	~KSOM(void);
+	~KSOM();
 
 	bool calcIterate();
 	int time() const; 
@@ -60,7 +60,7 @@ KSOM<T>::KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols,
 
 
 template <typename T>
-KSOM<T>::~KSOM(void)
+KSOM<T>::~KSOM()
 {
 }
 
