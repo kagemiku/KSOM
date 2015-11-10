@@ -39,6 +39,7 @@ public:
 	~KSOM();
 
 	bool computeOnes();
+	void compute();
 	int time() const; 
 };
 
@@ -144,6 +145,14 @@ bool KSOM<T>::computeOnes()
 	return true;
 }
 
+
+template <typename T>
+void KSOM<T>::compute()
+{
+	while ( computeOnes() ) {
+		;
+	}
+}
 
 template <typename T>
 int KSOM<T>::time() const
