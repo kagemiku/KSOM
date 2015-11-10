@@ -36,7 +36,7 @@ KSOM's constructor requires the following values.
 | alpha0 | initial value of alpha |
 | sigma0 | initial value of sigma |
 
-5. Call KSOM::calcIterate() method.  
+5. Call KSOM::compute() method or KSOM::computeOnes() method.
 
 # Example
 Please look at the source file **Main.cpp** in examples.  
