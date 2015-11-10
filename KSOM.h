@@ -7,7 +7,7 @@
 
 
 namespace {
-	const double MAX_DISTANCE = std::numeric_limits<double>::max();
+	const auto MAX_DISTANCE = std::numeric_limits<double>::max();
 };
 
 
@@ -97,7 +97,7 @@ double KSOM<T>::calcDistance(int x1, int y1, int x2, int y2)
 template <typename T>
 double KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2)
 {
-	double dis = 0.0;
+	auto dis = 0.0;
 	for ( int i = 0; i < dimension_; i++ ) {
 		dis += pow(node1[i] - node2[i], 2.0);
 	}
@@ -113,13 +113,13 @@ bool KSOM<T>::computeOnes()
 		return false;
 	}
 
-    const int idx = time_;
+    const auto idx = time_;
 	const Node<T>& refNode = src_[idx];
-	double minDis = MAX_DISTANCE;
-	int minDisRow = 0, minDisCol = 0;
-	for ( int r = 0; r < rows_; r++ ) {
-		for ( int c = 0; c < cols_; c++ ) {
-			double dis = calcDistance(refNode, map_[r][c]);
+	auto minDis = MAX_DISTANCE;
+	auto minDisRow = 0, minDisCol = 0;
+	for ( auto r = 0; r < rows_; r++ ) {
+		for ( auto c = 0; c < cols_; c++ ) {
+			auto dis = calcDistance(refNode, map_[r][c]);
 			if ( dis < minDis ) {
 				minDis = dis;
 				minDisRow = r;
@@ -128,13 +128,13 @@ bool KSOM<T>::computeOnes()
 		}
 	}
  
-	const double alpha = calcAlpha(time_);
-	for ( int r = 0; r < rows_; r++ ) {
-		for ( int c = 0; c < cols_; c++ ) {
-			const double dis = calcDistance(r, c, minDisRow, minDisCol);
-			const double h = calcH(dis, time_);
+	const auto alpha = calcAlpha(time_);
+	for ( auto r = 0; r < rows_; r++ ) {
+		for ( auto c = 0; c < cols_; c++ ) {
+			const auto dis = calcDistance(r, c, minDisRow, minDisCol);
+			const auto h = calcH(dis, time_);
 
-			for ( int i = 0; i < dimension_; i++ ) {
+			for ( auto i = 0; i < dimension_; i++ ) {
 				map_[r][c][i] += static_cast<T>(h*alpha*(refNode[i] - map_[r][c][i]));
 			}
 		}

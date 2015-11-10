@@ -46,7 +46,7 @@ public:
 template <typename T>
 void Node<T>::copyMember(const Node<T>& rhs)
 {
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		this->elems_[i] = rhs.elems_[i];
 	}
 }
@@ -90,7 +90,7 @@ template <typename T>
 Node<T> Node<T>::operator-() const 
 {
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = -this->elems_[i];
 	}
 
@@ -106,7 +106,7 @@ Node<T> Node<T>::operator+(const Node& rhs) const
 	}
 
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] + rhs.elems_[i];
 	}
 
@@ -118,7 +118,7 @@ template <typename T>
 Node<T> Node<T>::operator+(T val) const
 {
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] + val;
 	}
 
@@ -134,7 +134,7 @@ Node<T> Node<T>::operator-(const Node& rhs) const
 	}
 
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] - rhs.elems_[i];
 	}
 
@@ -146,7 +146,7 @@ template <typename T>
 Node<T> Node<T>::operator-(T val) const
 {
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] - val;
 	}
 
@@ -162,7 +162,7 @@ Node<T> Node<T>::operator*(const Node& rhs) const
 	}
 
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] * rhs.elems_[i];
 	}
 
@@ -174,7 +174,7 @@ template <typename T>
 Node<T> Node<T>::operator*(T val) const
 {
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] * val;
 	}
 
@@ -190,7 +190,7 @@ Node<T> Node<T>::operator/(const Node& rhs) const
 	}
 
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		if ( rhs.elems_[i] == static_cast<T>(0) ) {
 			throw std::string("divided by zero");
 		}
@@ -209,7 +209,7 @@ Node<T> Node<T>::operator/(T val) const
 	}
 
 	Node<T> node(size_);
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] / val;
 	}
 
@@ -241,7 +241,7 @@ Node<T>& Node<T>::operator+=(const Node& rhs)
 		throw std::string("different size");
 	}
 
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] += rhs.elems_[i];
 	}
 
@@ -252,7 +252,7 @@ Node<T>& Node<T>::operator+=(const Node& rhs)
 template <typename T>
 Node<T>& Node<T>::operator+=(T val)
 {
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] += val;
 	}
 
@@ -267,7 +267,7 @@ Node<T>& Node<T>::operator-=(const Node& rhs)
 		throw std::string("different size");
 	}
 
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] -= rhs.elems_[i];
 	}
 
@@ -278,7 +278,7 @@ Node<T>& Node<T>::operator-=(const Node& rhs)
 template <typename T>
 Node<T>& Node<T>::operator-=(T val)
 {
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] -= val;
 	}
 
@@ -293,7 +293,7 @@ Node<T>& Node<T>::operator*=(const Node& rhs)
 		throw std::string("different size");
 	}
 
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] *= rhs.elems_[i];
 	}
 
@@ -304,7 +304,7 @@ Node<T>& Node<T>::operator*=(const Node& rhs)
 template <typename T>
 Node<T>& Node<T>::operator*=(T val)
 {
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] *= val;
 	}
 
@@ -319,7 +319,7 @@ Node<T>& Node<T>::operator/=(const Node& rhs)
 		throw std::string("different size");
 	}
 
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		if ( rhs.elems_[i] == static_cast<T>(0) ) {
 			throw std::string("divided by zero");
 		}
@@ -337,7 +337,7 @@ Node<T>& Node<T>::operator/=(T val)
 		throw std::string("divided by zero");
 	}
 
-	for ( int i = 0; i < size_; i++ ) {
+	for ( auto i = 0; i < size_; i++ ) {
 		elems_[i] /= val;
 	}
 
