@@ -28,19 +28,19 @@ private:
 	int time_;
 	
 private:
-	inline double calcAlpha(int time);
-	inline double calcSigma(int time);
-	inline double calcH(double distance, int time);
-	inline double calcDistance(int x1, int y1, int x2, int y2);
-	inline double calcDistance(const Node<T>& node1, const Node<T>& node2); 
+	inline auto calcAlpha(int time) -> double;
+	inline auto calcSigma(int time) -> double;
+	inline auto calcH(double distance, int time) -> double;
+	inline auto calcDistance(int x1, int y1, int x2, int y2) -> double;
+	inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) -> double; 
  
 public:
 	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
 	~KSOM();
 
-	bool computeOnes();
-	void compute();
-	int time() const; 
+	auto computeOnes() -> bool;
+	auto compute() -> void;
+	auto time() const -> int; 
 };
 
 
@@ -67,35 +67,35 @@ KSOM<T>::~KSOM()
 
  
 template <typename T>
-double KSOM<T>::calcAlpha(int time)
+auto KSOM<T>::calcAlpha(int time) -> double
 {
 	return alpha0_ * exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
 }
 
 
 template <typename T>
-double KSOM<T>::calcSigma(int time)
+auto KSOM<T>::calcSigma(int time) -> double
 {
 	return sigma0_ * exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
 }
 
 
 template <typename T>
-double KSOM<T>::calcH(double distance, int time)
+auto KSOM<T>::calcH(double distance, int time) -> double
 {
 	return exp(-pow(distance, 2.0)/(2*pow(calcSigma(time), 2.0)));
 }
 
 
 template <typename T>
-double KSOM<T>::calcDistance(int x1, int y1, int x2, int y2)
+auto KSOM<T>::calcDistance(int x1, int y1, int x2, int y2) -> double
 {
 	return sqrt(pow(x1 - x2, 2.0) + pow(y1 - y2, 2.0));
 }
 
 
 template <typename T>
-double KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2)
+auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) -> double
 {
 	auto dis = 0.0;
 	for ( int i = 0; i < dimension_; i++ ) {
@@ -107,7 +107,7 @@ double KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2)
 
 
 template <typename T>
-bool KSOM<T>::computeOnes()
+auto KSOM<T>::computeOnes() -> bool
 {
 	if ( time_ >= maxIterate_ ) {
 		return false;
@@ -147,7 +147,7 @@ bool KSOM<T>::computeOnes()
 
 
 template <typename T>
-void KSOM<T>::compute()
+auto KSOM<T>::compute() -> void
 {
 	while ( computeOnes() ) {
 		;
@@ -155,7 +155,7 @@ void KSOM<T>::compute()
 }
 
 template <typename T>
-int KSOM<T>::time() const
+auto KSOM<T>::time() const -> int
 {
 	return time_;
 }
