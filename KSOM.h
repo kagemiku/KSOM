@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <tuple>
 #include <limits>
 #include <cmath>
 #include "Node.h"
@@ -31,10 +32,10 @@ private:
 	inline auto calcAlpha(int time) -> double;
 	inline auto calcSigma(int time) -> double;
 	inline auto calcH(double distance, int time) -> double;
-	inline auto calcDistance(int x1, int y1, int x2, int y2) -> double;
+	inline auto calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) -> double;
 	inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) -> double; 
-	inline auto findNearestNode(int idx, int& nearestRow, int& nearestCol) -> void;
-	inline auto learnNode(int idx, int nearestRow, int nearestCol) -> void;
+	inline auto findNearestNode(int idx) -> std::tuple<int, int>;
+	inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
  
 public:
 	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
@@ -90,8 +91,11 @@ auto KSOM<T>::calcH(double distance, int time) -> double
 
 
 template <typename T>
-auto KSOM<T>::calcDistance(int x1, int y1, int x2, int y2) -> double
+auto KSOM<T>::calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) -> double
 {
+	auto x1 = std::get<0>(pt1), y1 = std::get<1>(pt1);
+	auto x2 = std::get<0>(pt2), y2 = std::get<1>(pt2);
+
 	return sqrt(pow(x1 - x2, 2.0) + pow(y1 - y2, 2.0));
 }
 
@@ -109,7 +113,7 @@ auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) -> double
 
 
 template <typename T>
-auto KSOM<T>::findNearestNode(int idx, int& nearestRow, int& nearestCol) -> void
+auto KSOM<T>::findNearestNode(int idx) -> std::tuple<int, int>
 {
 	const Node<T>& refNode = src_[idx];
 	auto minDis = MAX_DISTANCE;
@@ -125,20 +129,20 @@ auto KSOM<T>::findNearestNode(int idx, int& nearestRow, int& nearestCol) -> void
 		}
 	}
 
-	nearestRow = minDisRow;
-	nearestCol = minDisCol;
+	return std::make_tuple(minDisRow, minDisCol);
 }
 
 
 template <typename T>
-auto KSOM<T>::learnNode(int idx, int nearestRow, int nearestCol) -> void
+auto KSOM<T>::learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void
 {
 	const Node<T>& refNode = src_[idx];
 	const auto alpha = calcAlpha(time_);
 	for ( auto r = 0; r < rows_; r++ ) {
 		for ( auto c = 0; c < cols_; c++ ) {
-			const auto dis = calcDistance(r, c, nearestRow, nearestCol);
-			const auto h = calcH(dis, time_);
+			auto currentPoint = std::make_tuple(r, c);
+			const auto dis	= calcDistance(currentPoint, nearestPoint);
+			const auto h	= calcH(dis, time_);
 
 			for ( auto i = 0; i < dimension_; i++ ) {
 				map_[r][c][i] += static_cast<T>(h*alpha*(refNode[i] - map_[r][c][i]));
@@ -154,9 +158,8 @@ auto KSOM<T>::computeOnes() -> bool
 		return false;
 	}
  
-	auto nearestRow = 0, nearestCol = 0;
-	findNearestNode(time_, nearestRow, nearestCol); 
-	learnNode(time_, nearestRow, nearestCol);
+	auto nearestPoint(findNearestNode(time_));
+	learnNode(time_, nearestPoint);
 	++time_;
     
 	return true;
