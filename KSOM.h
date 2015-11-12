@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <random>
 #include <tuple>
 #include <limits>
 #include <cmath>
@@ -27,7 +28,10 @@ private:
 	const double sigma0_; 
 	const int maxIterate_;
 	int time_;
-	
+
+    std::mt19937 mt_;
+    std::uniform_int_distribution<> randIdx_;
+
 private:
 	inline auto calcAlpha(int time) -> double;
 	inline auto calcSigma(int time) -> double;
@@ -60,6 +64,9 @@ KSOM<T>::KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols,
 	,maxIterate_(maxIterate)
 	,time_(0)
 {
+    std::random_device rnd;
+    mt_ = std::mt19937(rnd());
+    randIdx_ = std::uniform_int_distribution<>(0, length_ - 1);
 }
 
 
@@ -159,7 +166,8 @@ auto KSOM<T>::computeOnes() -> bool
 	}
  
 	auto nearestPoint(findNearestNode(time_));
-	learnNode(time_, nearestPoint);
+    const auto idx = randIdx_(mt_);
+	learnNode(idx, nearestPoint);
 	++time_;
     
 	return true;
