@@ -165,8 +165,8 @@ auto KSOM<T>::computeOnes() -> bool
 		return false;
 	}
  
-	auto nearestPoint(findNearestNode(time_));
     const auto idx = randIdx_(mt_);
+	auto nearestPoint(findNearestNode(idx));
 	learnNode(idx, nearestPoint);
 	++time_;
     
