@@ -9,7 +9,7 @@
 
 
 namespace {
-	const auto MAX_DISTANCE = std::numeric_limits<double>::max();
+	constexpr auto MAX_DISTANCE = std::numeric_limits<double>::max();
 };
 
 

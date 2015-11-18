@@ -9,15 +9,15 @@ using namespace std;
 
 
 namespace {
-    const auto RGB_MIN = 0;
-    const auto RGB_MAX = 255;
+    constexpr auto RGB_MIN = 0;
+    constexpr auto RGB_MAX = 255;
 }
 
 int main()
 { 
     // create array of input vector
-	const auto length = 100;
-	const auto dimension = 3;
+	constexpr auto length = 100;
+	constexpr auto dimension = 3;
 	Node<int>* src = new Node<int>[length];
 	for (auto i = 0; i < length; i++ ) {
 		src[i] = Node<int>(dimension);
@@ -33,7 +33,7 @@ int main()
 	}
 	
     // create matrix of model vector
-	const auto rows = 40, cols = 40;
+	constexpr auto rows = 40, cols = 40;
 	Node<int>** map = new Node<int>*[rows];
 	for ( auto i = 0; i < rows; i++ ) {
 		map[i] = new Node<int>[cols];
@@ -53,8 +53,8 @@ int main()
 	
 
     // create instance of KSOM and compute
-	const auto alpha0 = 0.1;
-	const auto sigma0 = 20.0;
+	constexpr auto alpha0 = 0.1;
+	constexpr auto sigma0 = 20.0;
 	KSOM<int>* colorSOM = new KSOM<int>(src, length, map, rows, cols, length, alpha0, sigma0); 
 	while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
