@@ -79,14 +79,14 @@ KSOM<T>::~KSOM()
 template <typename T>
 auto KSOM<T>::calcAlpha(int time) -> double
 {
-	return alpha0_ * exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
+	return alpha0_*exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
 }
 
 
 template <typename T>
 auto KSOM<T>::calcSigma(int time) -> double
 {
-	return sigma0_ * exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
+	return sigma0_*exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
 }
 
 
