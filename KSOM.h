@@ -100,8 +100,8 @@ auto KSOM<T>::calcH(double distance, int time) -> double
 template <typename T>
 auto KSOM<T>::calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) -> double
 {
-	auto x1 = std::get<0>(pt1), y1 = std::get<1>(pt1);
-	auto x2 = std::get<0>(pt2), y2 = std::get<1>(pt2);
+	const auto x1 = std::get<0>(pt1), y1 = std::get<1>(pt1);
+	const auto x2 = std::get<0>(pt2), y2 = std::get<1>(pt2);
 
 	return sqrt(pow(x1 - x2, 2.0) + pow(y1 - y2, 2.0));
 }
