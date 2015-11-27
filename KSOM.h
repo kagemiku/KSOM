@@ -33,12 +33,12 @@ private:
     std::uniform_int_distribution<> randIdx_;
 
 private:
-	inline auto calcAlpha(int time) -> double;
-	inline auto calcSigma(int time) -> double;
-	inline auto calcH(double distance, int time) -> double;
-	inline auto calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) -> double;
-	inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) -> double; 
-	inline auto findNearestNode(int idx) -> std::tuple<int, int>;
+	inline auto calcAlpha(int time) const -> double;
+	inline auto calcSigma(int time) const -> double;
+	inline auto calcH(double distance, int time) const -> double;
+	inline auto calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) const -> double;
+	inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
+	inline auto findNearestNode(int idx) const -> std::tuple<int, int>;
 	inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
  
 public:
@@ -77,28 +77,28 @@ KSOM<T>::~KSOM()
 
  
 template <typename T>
-auto KSOM<T>::calcAlpha(int time) -> double
+auto KSOM<T>::calcAlpha(int time) const -> double
 {
 	return alpha0_*exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
 }
 
 
 template <typename T>
-auto KSOM<T>::calcSigma(int time) -> double
+auto KSOM<T>::calcSigma(int time) const -> double
 {
 	return sigma0_*exp(-static_cast<double>(time)/static_cast<double>(maxIterate_));
 }
 
 
 template <typename T>
-auto KSOM<T>::calcH(double distance, int time) -> double
+auto KSOM<T>::calcH(double distance, int time) const -> double
 {
 	return exp(-pow(distance, 2.0)/(2*pow(calcSigma(time), 2.0)));
 }
 
 
 template <typename T>
-auto KSOM<T>::calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) -> double
+auto KSOM<T>::calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int, int>& pt2) const -> double
 {
 	const auto x1 = std::get<0>(pt1), y1 = std::get<1>(pt1);
 	const auto x2 = std::get<0>(pt2), y2 = std::get<1>(pt2);
@@ -108,7 +108,7 @@ auto KSOM<T>::calcDistance(const std::tuple<int, int>& pt1, const std::tuple<int
 
 
 template <typename T>
-auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) -> double
+auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double
 {
 	auto dis = 0.0;
 	for ( int i = 0; i < dimension_; i++ ) {
@@ -120,7 +120,7 @@ auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) -> double
 
 
 template <typename T>
-auto KSOM<T>::findNearestNode(int idx) -> std::tuple<int, int>
+auto KSOM<T>::findNearestNode(int idx) const -> std::tuple<int, int>
 {
 	const auto& refNode = src_[idx];
 	auto minDis = MAX_DISTANCE;
