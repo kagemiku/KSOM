@@ -28,10 +28,7 @@ KSOM's constructor requires the following values.
 | name | description |
 |:-----: |:----- |
 | src | array of input vector |
-| length | length of src |
 | map | matrix of model vector |
-| rows | number of row in map |
-| cols | number of column in map |
 | maxIterate | number of iteration |
 | alpha0 | initial value of alpha |
 | sigma0 | initial value of sigma |
