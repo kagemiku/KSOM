@@ -48,7 +48,8 @@ public:
 
 	auto computeOnes() -> bool;
 	auto compute() -> void;
-	auto time() const -> int; 
+	auto time() const -> int;
+	auto map() const -> std::vector<std::vector<Node<T>>>;
 };
 
 
@@ -187,4 +188,11 @@ template <typename T>
 auto KSOM<T>::time() const -> int
 {
 	return time_;
+}
+
+
+template <typename T>
+auto KSOM<T>::map() const -> std::vector<std::vector<Node<T>>>
+{
+	return map_;
 }
