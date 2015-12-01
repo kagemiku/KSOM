@@ -16,7 +16,7 @@ private:
 public:
 	Node(size_t size=1);
 	Node(const Node<T>& rhs);
-	~Node(void);
+	~Node();
 	auto operator+() const -> Node<T>;
 	auto operator-() const -> Node<T>;
 	auto operator+(const Node<T>& rhs) const -> Node<T>;
@@ -39,7 +39,7 @@ public:
 	auto operator[](size_t idx) const -> T&;
 	auto setElem(T elem, size_t idx) -> void;
 	auto elem(size_t idx) const -> T;
-	auto size(void) const -> int;
+	auto size() const -> int;
 }; 
 
 
@@ -71,7 +71,7 @@ Node<T>::Node(const Node<T>& rhs)
 
 
 template <typename T>
-Node<T>::~Node(void) 
+Node<T>::~Node()
 { 
 	delete[] elems_;
 }
@@ -379,7 +379,7 @@ auto Node<T>::elem(size_t idx) const -> T
 
 
 template <typename T>
-auto Node<T>::size(void) const -> int
+auto Node<T>::size() const -> int
 {
 	return size_;	
 }
