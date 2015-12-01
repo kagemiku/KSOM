@@ -19,37 +19,33 @@ int main()
     // create array of input vector
 	constexpr auto length = 100;
 	constexpr auto dimension = 3;
-    vector<Node<int>> src;
-    for ( auto i = 0; i < length; i++ ) {
-        src.push_back(Node<int>(dimension));
+    vector<Node<int>> src(length);
+    for ( auto& node : src ) {
+		node = Node<int>(dimension);
     }
 
     random_device rnd;
     mt19937 mt(rnd());
     uniform_int_distribution<> randRGB(RGB_MIN, RGB_MAX);
-    for ( auto i = 0; i < length; i++ ) {
-		for ( auto j = 0; j < dimension; j++ ) {
-			src[i][j] = randRGB(mt);
+    for ( auto& node : src ) {
+		for ( auto i = 0; i < dimension; i++ ) {
+			node[i] = randRGB(mt);
 		}
 	}
 	
     // create matrix of model vector
 	constexpr auto rows = 40, cols = 40;
-    vector<vector<Node<int>>> map;
-    for ( auto i = 0; i < rows; i++ ) {
-        vector<Node<int>> row;
-        for ( auto j = 0; j < cols; j++ ) {
-            row.push_back(Node<int>(dimension));
-        }
-        map.push_back(row);
+    vector<vector<Node<int>>> map(rows, vector<Node<int>>());
+    for ( auto& row : map ) {
+		row = vector<Node<int>>(cols);
     }
  
     uniform_int_distribution<> randIdx(0, length - 1);
-	for ( auto i = 0; i < rows; i++ ) {
-		for ( auto j = 0; j < cols; j++ ) {
+	for ( auto& row : map ) {
+		for ( auto& node : row ) {
             // set input vector at random
             int idx = randIdx(mt);
-			map[i][j] = src[idx];
+			node = src[idx];
 		 }
 	}
 	

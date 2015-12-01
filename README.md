@@ -10,10 +10,11 @@ For example, if you want to use some input vector with 3-dimension...
 ```cpp
 const int length = 100;
 const int dimension = 3;
-vector<Node<int>> src;
-for ( auto i = 0; i < length; i++ ) {
-    src.push_back(Node<int>(dimension));
+vector<Node<int>> src(length);
+for ( auto& node : src ) {
+    node = Node<int>(dimension);
 }
+
 ```
 
 3. Create matrix of model vector.   
