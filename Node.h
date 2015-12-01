@@ -8,15 +8,15 @@ template <typename T>
 class Node {
 private:
 	T* elems_;
-	int size_;
+	size_t size_;
  
 private:
 	auto copyMember(const Node<T>& rhs) -> void;
 
 public:
-	Node(int size=1);
+	Node(size_t size=1);
 	Node(const Node<T>& rhs);
-	~Node(void);
+	~Node();
 	auto operator+() const -> Node<T>;
 	auto operator-() const -> Node<T>;
 	auto operator+(const Node<T>& rhs) const -> Node<T>;
@@ -36,24 +36,24 @@ public:
 	auto operator*=(T val) -> Node<T>&;
 	auto operator/=(const Node<T>& rhs) -> Node<T>&;
 	auto operator/=(T val) -> Node<T>&;
-	auto operator[](int idx) const -> T&;
-	auto setElem(T elem, int idx) -> void;
-	auto elem(int idx) const -> T;
-	auto size(void) const -> int;
+	auto operator[](size_t idx) const -> T&;
+	auto setElem(T elem, size_t idx) -> void;
+	auto elem(size_t idx) const -> T;
+	auto size() const -> int;
 }; 
 
 
 template <typename T>
 auto Node<T>::copyMember(const Node<T>& rhs) -> void
 {
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		this->elems_[i] = rhs.elems_[i];
 	}
 }
 
 
 template <typename T>
-Node<T>::Node(int size)
+Node<T>::Node(size_t size)
 	:size_(size) 
 { 
 	elems_ = new T[size_];
@@ -71,7 +71,7 @@ Node<T>::Node(const Node<T>& rhs)
 
 
 template <typename T>
-Node<T>::~Node(void) 
+Node<T>::~Node()
 { 
 	delete[] elems_;
 }
@@ -90,7 +90,7 @@ template <typename T>
 auto Node<T>::operator-() const -> Node<T>
 {
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = -this->elems_[i];
 	}
 
@@ -106,7 +106,7 @@ auto Node<T>::operator+(const Node& rhs) const -> Node<T>
 	}
 
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] + rhs.elems_[i];
 	}
 
@@ -118,7 +118,7 @@ template <typename T>
 auto Node<T>::operator+(T val) const -> Node<T>
 {
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] + val;
 	}
 
@@ -134,7 +134,7 @@ auto Node<T>::operator-(const Node& rhs) const -> Node<T>
 	}
 
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] - rhs.elems_[i];
 	}
 
@@ -146,7 +146,7 @@ template <typename T>
 auto Node<T>::operator-(T val) const -> Node<T>
 {
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] - val;
 	}
 
@@ -162,7 +162,7 @@ auto Node<T>::operator*(const Node& rhs) const -> Node<T>
 	}
 
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] * rhs.elems_[i];
 	}
 
@@ -174,7 +174,7 @@ template <typename T>
 auto Node<T>::operator*(T val) const -> Node<T>
 {
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] * val;
 	}
 
@@ -190,7 +190,7 @@ auto Node<T>::operator/(const Node& rhs) const -> Node<T>
 	}
 
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		if ( rhs.elems_[i] == static_cast<T>(0) ) {
 			throw std::string("divided by zero");
 		}
@@ -209,7 +209,7 @@ auto Node<T>::operator/(T val) const -> Node<T>
 	}
 
 	Node<T> node(size_);
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		node.elems_[i] = this->elems_[i] / val;
 	}
 
@@ -241,7 +241,7 @@ auto Node<T>::operator+=(const Node& rhs)  -> Node<T>&
 		throw std::string("different size");
 	}
 
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] += rhs.elems_[i];
 	}
 
@@ -252,7 +252,7 @@ auto Node<T>::operator+=(const Node& rhs)  -> Node<T>&
 template <typename T>
 auto Node<T>::operator+=(T val) -> Node<T>&
 {
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] += val;
 	}
 
@@ -267,7 +267,7 @@ auto Node<T>::operator-=(const Node& rhs) -> Node<T>&
 		throw std::string("different size");
 	}
 
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] -= rhs.elems_[i];
 	}
 
@@ -278,7 +278,7 @@ auto Node<T>::operator-=(const Node& rhs) -> Node<T>&
 template <typename T>
 auto Node<T>::operator-=(T val) -> Node<T>&
 {
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] -= val;
 	}
 
@@ -293,7 +293,7 @@ auto Node<T>::operator*=(const Node& rhs) -> Node<T>&
 		throw std::string("different size");
 	}
 
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] *= rhs.elems_[i];
 	}
 
@@ -304,7 +304,7 @@ auto Node<T>::operator*=(const Node& rhs) -> Node<T>&
 template <typename T>
 auto Node<T>::operator*=(T val) -> Node<T>&
 {
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] *= val;
 	}
 
@@ -319,7 +319,7 @@ auto Node<T>::operator/=(const Node& rhs) -> Node<T>&
 		throw std::string("different size");
 	}
 
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		if ( rhs.elems_[i] == static_cast<T>(0) ) {
 			throw std::string("divided by zero");
 		}
@@ -337,7 +337,7 @@ auto Node<T>::operator/=(T val) -> Node<T>&
 		throw std::string("divided by zero");
 	}
 
-	for ( auto i = 0; i < size_; i++ ) {
+	for ( auto i = 0U; i < size_; i++ ) {
 		elems_[i] /= val;
 	}
 
@@ -346,9 +346,9 @@ auto Node<T>::operator/=(T val) -> Node<T>&
 
 
 template <typename T>
-auto Node<T>::operator[](int idx) const -> T&
+auto Node<T>::operator[](size_t idx) const -> T&
 {
-	if ( idx < 0 || idx >= size_ ) {
+	if ( idx >= size_ ) {
 		throw std::string("out of range.");
 	}
 
@@ -357,7 +357,7 @@ auto Node<T>::operator[](int idx) const -> T&
 
 
 template <typename T>
-auto Node<T>::setElem(T elem, int idx) -> void
+auto Node<T>::setElem(T elem, size_t idx) -> void
 {
 	if ( idx >= size_ ) {
 		throw std::string("out of range.");
@@ -368,7 +368,7 @@ auto Node<T>::setElem(T elem, int idx) -> void
 
 
 template <typename T>
-auto Node<T>::elem(int idx) const -> T
+auto Node<T>::elem(size_t idx) const -> T
 {
 	if ( idx >= size_ ) {
 		throw std::string("out of range.");
@@ -379,7 +379,7 @@ auto Node<T>::elem(int idx) const -> T
 
 
 template <typename T>
-auto Node<T>::size(void) const -> int
+auto Node<T>::size() const -> int
 {
 	return size_;	
 }
