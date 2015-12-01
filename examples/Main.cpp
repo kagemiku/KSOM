@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <cstdlib>
 #include <ctime>
 #include <random>
@@ -18,10 +19,10 @@ int main()
     // create array of input vector
 	constexpr auto length = 100;
 	constexpr auto dimension = 3;
-	Node<int>* src = new Node<int>[length];
-	for (auto i = 0; i < length; i++ ) {
-		src[i] = Node<int>(dimension);
-	}
+    vector<Node<int>> src;
+    for ( auto i = 0; i < length; i++ ) {
+        src.push_back(Node<int>(dimension));
+    }
 
     random_device rnd;
     mt19937 mt(rnd());
@@ -34,13 +35,14 @@ int main()
 	
     // create matrix of model vector
 	constexpr auto rows = 40, cols = 40;
-	Node<int>** map = new Node<int>*[rows];
-	for ( auto i = 0; i < rows; i++ ) {
-		map[i] = new Node<int>[cols];
-		for ( auto j = 0; j < cols; j++ ) {
-			map[i][j] = Node<int>(dimension);
-		}
-	}
+    vector<vector<Node<int>>> map;
+    for ( auto i = 0; i < rows; i++ ) {
+        vector<Node<int>> row;
+        for ( auto j = 0; j < cols; j++ ) {
+            row.push_back(Node<int>(dimension));
+        }
+        map.push_back(row);
+    }
  
     uniform_int_distribution<> randIdx(0, length - 1);
 	for ( auto i = 0; i < rows; i++ ) {
@@ -53,19 +55,15 @@ int main()
 	
 
     // create instance of KSOM and compute
+    constexpr auto maxIterate = 100;
 	constexpr auto alpha0 = 0.1;
 	constexpr auto sigma0 = 20.0;
-	KSOM<int>* colorSOM = new KSOM<int>(src, length, map, rows, cols, length, alpha0, sigma0); 
+	KSOM<int>* colorSOM = new KSOM<int>(src, map, maxIterate, alpha0, sigma0); 
 	while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
 	}
 
 
-	delete[] src;
-	for ( auto i = 0; i < rows; i++ ) {
-		delete[] map[i];
-	}
-	delete[] map; 
 	delete colorSOM;
 
 	return 0;

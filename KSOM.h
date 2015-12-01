@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include <random>
 #include <tuple>
 #include <limits>
@@ -16,13 +17,13 @@ namespace {
 template <typename T>
 class KSOM {
 private:
-	const Node<T>* src_;
-	const int length_;
+	const std::vector<Node<T>> src_;
+    const int length_;
 	const int dimension_;
 
-	Node<T>** map_;
-	const int rows_;
-	const int cols_;
+    std::vector<std::vector<Node<T>>> map_;
+    const int rows_;
+    const int cols_;
 
 	const double alpha0_;
 	const double sigma0_; 
@@ -42,7 +43,7 @@ private:
 	inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
  
 public:
-	KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0);
+	KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0);
 	~KSOM();
 
 	auto computeOnes() -> bool;
@@ -52,13 +53,13 @@ public:
 
 
 template <typename T>
-KSOM<T>::KSOM(Node<T>* const src, int length, Node<T>** map, int rows, int cols, int maxIterate, double alpha0, double sigma0)
+KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0)
 	:src_(src)
-	,length_(length)
+    ,length_(src_.size())
 	,dimension_(src[0].size())
 	,map_(map)
-	,rows_(rows)
-	,cols_(cols)
+    ,rows_(map_.size())
+    ,cols_(map_[0].size())
 	,alpha0_(alpha0)
 	,sigma0_(sigma0)
 	,maxIterate_(maxIterate)
