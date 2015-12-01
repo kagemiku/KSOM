@@ -10,12 +10,9 @@ For example, if you want to use some input vector with 3-dimension...
 ```cpp
 const int length = 100;
 const int dimension = 3;
-Node<int>* src = new Node<int>[length];
-for (int i = 0; i < length; i++ ) {
-    src[i] = Node<int>(dimension);
-    for ( int j = 0; j < dimension; j++ ) {
-        src[i][j] = some_integer_value;
-    }
+vector<Node<int>> src;
+for ( auto i = 0; i < length; i++ ) {
+    src.push_back(Node<int>(dimension));
 }
 ```
 
