@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <vector>
 #include <random>
 #include <tuple>
@@ -43,7 +44,7 @@ private:
 	inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
  
 public:
-	KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0);
+	KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0) throw (std::string);
 	~KSOM();
 
 	auto computeOnes() -> bool;
@@ -54,7 +55,7 @@ public:
 
 
 template <typename T>
-KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0)
+KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0) throw (std::string)
 	:src_(src)
     ,length_(src_.size())
 	,dimension_(src[0].size())
@@ -66,6 +67,22 @@ KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Nod
 	,maxIterate_(maxIterate)
 	,time_(0)
 {
+	for ( auto node : src_ ) {
+		if ( node.size() != dimension_ ) {
+			throw std::string("dimension of source node is different.");
+		}
+	}
+	for ( auto row : map_ ) {
+		if ( row.size() != cols_ ) {
+			throw std::string("number of columns in map is different.");
+		}
+		for ( auto node : row ) {
+			if ( node.size() != dimension_ ) {
+				throw std::string("dimension of map node is different.");
+			}
+		}
+	}
+
     std::random_device rnd;
     mt_ = std::mt19937(rnd());
     randIdx_ = std::uniform_int_distribution<>(0, length_ - 1);

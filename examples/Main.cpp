@@ -49,7 +49,7 @@ int main()
 		for ( auto j = 0; j < cols; j++ ) {
             // set input vector at random
             int idx = randIdx(mt);
-			map[i][j] = src[idx]; 
+			map[i][j] = src[idx];
 		 }
 	}
 	
@@ -58,7 +58,7 @@ int main()
     constexpr auto maxIterate = 100;
 	constexpr auto alpha0 = 0.1;
 	constexpr auto sigma0 = 20.0;
-	KSOM<int>* colorSOM = new KSOM<int>(src, map, maxIterate, alpha0, sigma0); 
+	KSOM<int>* colorSOM = new KSOM<int>(src, map, maxIterate, alpha0, sigma0);
 	while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
 	}
