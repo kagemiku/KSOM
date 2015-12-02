@@ -70,12 +70,12 @@ int main()
     }
     
     // create instance of KSOM and compute
-    constexpr auto maxIterate = 1000;
+    constexpr auto maxIterate = 10000;
     constexpr auto alpha0 = 0.1;
     constexpr auto sigma0 = 20.0;
     auto colorSOM = make_unique<KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
     auto viewer = make_unique<Viewer>(std::string("ColorMap"));
-    auto mapMat    = cv::Mat(cv::Size(VIEWER_WIDTH, VIEWER_HEIGHT), CV_8UC3, cv::Scalar::all(255));
+    auto mapMat = cv::Mat(cv::Size(VIEWER_WIDTH, VIEWER_HEIGHT), CV_8UC3, cv::Scalar::all(255));
     while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
         createMapMat<int>(colorSOM->map(), rows, cols, mapMat);
