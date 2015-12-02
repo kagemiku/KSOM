@@ -10,13 +10,9 @@ Viewer::Viewer(const std::string& winName)
 }
 
 
-Viewer::Viewer(const Viewer& rhs)
-{
-}
-
-
 Viewer::~Viewer(void)
 {
+    cv::destroyWindow(winName_);
 } 
 
 
