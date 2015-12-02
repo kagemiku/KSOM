@@ -51,9 +51,6 @@ int main()
     constexpr auto sigma0 = 20.0;
     auto colorSOM = make_unique<KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
     while ( colorSOM->computeOnes() ) {
-    for ( auto& row : map ) {
-        row = vector<Node<int>>(cols);
-    }
         cout << colorSOM->time() << endl;
     }
 
