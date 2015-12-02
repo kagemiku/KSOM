@@ -18,46 +18,45 @@ namespace {
 int main()
 { 
     // create array of input vector
-	constexpr auto length = 100;
-	constexpr auto dimension = 3;
+    constexpr auto length = 100;
+    constexpr auto dimension = 3;
     vector<Node<int>> src(length, Node<int>(dimension));
 
     random_device rnd;
     mt19937 mt(rnd());
     uniform_int_distribution<> randRGB(RGB_MIN, RGB_MAX);
     for ( auto& node : src ) {
-		for ( auto i = 0; i < dimension; i++ ) {
-			node[i] = randRGB(mt);
-		}
-	}
-	
+        for ( auto i = 0; i < dimension; i++ ) {
+            node[i] = randRGB(mt);
+        }
+    }
+    
     // create matrix of model vector
-	constexpr auto rows = 40, cols = 40;
+    constexpr auto rows = 40, cols = 40;
     vector<vector<Node<int>>> map(rows, vector<Node<int>>(cols));
  
     uniform_int_distribution<> randIdx(0, length - 1);
-	for ( auto& row : map ) {
-		for ( auto& node : row ) {
+    for ( auto& row : map ) {
+        for ( auto& node : row ) {
             // set input vector at random
             int idx = randIdx(mt);
-			node = src[idx];
-		 }
-	}
-	
+            node = src[idx];
+         }
+    }
+    
 
     // create instance of KSOM and compute
     constexpr auto maxIterate = 100;
-	constexpr auto alpha0 = 0.1;
-	constexpr auto sigma0 = 20.0;
-	auto colorSOM = make_unique<KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
-	while ( colorSOM->computeOnes() ) {
+    constexpr auto alpha0 = 0.1;
+    constexpr auto sigma0 = 20.0;
+    auto colorSOM = make_unique<KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
+    while ( colorSOM->computeOnes() ) {
     for ( auto& row : map ) {
-		row = vector<Node<int>>(cols);
+        row = vector<Node<int>>(cols);
     }
         cout << colorSOM->time() << endl;
-	}
+    }
 
 
-	return 0;
+    return 0;
 }
-
