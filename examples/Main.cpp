@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include <cstdlib>
 #include <ctime>
 #include <random>
@@ -48,7 +49,7 @@ int main()
     constexpr auto maxIterate = 100;
 	constexpr auto alpha0 = 0.1;
 	constexpr auto sigma0 = 20.0;
-	KSOM<int>* colorSOM = new KSOM<int>(src, map, maxIterate, alpha0, sigma0);
+	auto colorSOM = make_unique<KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
 	while ( colorSOM->computeOnes() ) {
     for ( auto& row : map ) {
 		row = vector<Node<int>>(cols);
@@ -56,8 +57,6 @@ int main()
         cout << colorSOM->time() << endl;
 	}
 
-
-	delete colorSOM;
 
 	return 0;
 }
