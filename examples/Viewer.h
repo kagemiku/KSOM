@@ -16,5 +16,5 @@ public:
 	explicit Viewer(const std::string& winName);
 	~Viewer(void);
 
-	void showImage(const cv::Mat source, int delay);
+	auto showMat(const cv::Mat& source, int delay=0) -> void;
 }; 

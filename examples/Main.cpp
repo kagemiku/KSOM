@@ -79,9 +79,9 @@ int main()
     while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
         createMapMat<int>(colorSOM->map(), rows, cols, mapMat);
-        viewer->showImage(mapMat, 1);                
+        viewer->showMat(mapMat, 1);
     }
     cv::waitKey(0);
- 
+
     return 0;
 }

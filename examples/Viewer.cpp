@@ -20,7 +20,7 @@ Viewer::~Viewer(void)
 } 
 
 
-void Viewer::showImage(const cv::Mat source, int delay)
+auto Viewer::showMat(const cv::Mat& source, int delay) -> void
 {
 	cv::imshow(winName_, source);
 	cv::waitKey(delay);
