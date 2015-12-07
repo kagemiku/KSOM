@@ -29,7 +29,7 @@ private:
     const int cols_;
 
     const double alpha0_;
-    const double sigma0_; 
+    const double sigma0_;
     const int maxIterate_;
     int time_;
 
@@ -86,8 +86,8 @@ KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Nod
     }
 
     std::random_device rnd;
-    mt_ = std::mt19937(rnd());
-    randIdx_ = std::uniform_int_distribution<>(0, length_ - 1);
+    mt_         = std::mt19937(rnd());
+    randIdx_    = std::uniform_int_distribution<>(0, length_ - 1);
 }
 
 
@@ -168,9 +168,9 @@ auto KSOM<T>::learnNode(int idx, const Position& nearestPoint) -> void
     const auto alpha = calcAlpha(time_);
     for ( auto r = 0; r < rows_; r++ ) {
         for ( auto c = 0; c < cols_; c++ ) {
-            auto currentPoint = std::make_tuple(r, c);
-            const auto dis    = calcDistance(currentPoint, nearestPoint);
-            const auto h    = calcH(dis, time_);
+            auto currentPoint   = std::make_tuple(r, c);
+            const auto dis      = calcDistance(currentPoint, nearestPoint);
+            const auto h        = calcH(dis, time_);
 
             for ( auto i = 0; i < dimension_; i++ ) {
                 map_[r][c][i] += static_cast<T>(h*alpha*(refNode[i] - map_[r][c][i]));
@@ -186,7 +186,7 @@ auto KSOM<T>::computeOnes() -> bool
         return false;
     }
  
-    const auto idx            = randIdx_(mt_);
+    const auto idx          = randIdx_(mt_);
     const auto nearestPoint = findNearestNode(idx);
     learnNode(idx, nearestPoint);
     ++time_;
