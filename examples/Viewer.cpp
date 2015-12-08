@@ -3,6 +3,9 @@
 #include <opencv2/highgui/highgui.hpp>
 
 
+namespace kg {
+
+
 Viewer::Viewer(const std::string& winName)
 	:winName_(winName)
 {
@@ -20,4 +23,7 @@ auto Viewer::showMat(const cv::Mat& source, int delay) -> void
 {
 	cv::imshow(winName_, source);
 	cv::waitKey(delay);
+}
+
+
 }

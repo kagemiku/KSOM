@@ -4,6 +4,9 @@
 #include <opencv2/core/core.hpp>
 
 
+namespace kg {
+
+
 class Viewer {
 private:
 	const std::string winName_;
@@ -16,3 +19,6 @@ public:
 
 	auto showMat(const cv::Mat& source, int delay=0) -> void;
 }; 
+
+
+}
