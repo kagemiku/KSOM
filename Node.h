@@ -4,6 +4,9 @@
 #include <cstring>
 
 
+namespace kg {
+
+
 template <typename T>
 class Node {
 private:
@@ -383,3 +386,7 @@ auto Node<T>::size() const -> int
 {
     return size_;
 }
+
+
+}
+
