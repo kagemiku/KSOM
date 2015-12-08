@@ -15,12 +15,13 @@ namespace {
     constexpr auto RGB_MAX = 255;
 }
 
+
 int main()
 { 
     // create array of input vector
     constexpr auto length = 100;
     constexpr auto dimension = 3;
-    vector<Node<int>> src(length, Node<int>(dimension));
+    vector<kg::Node<int>> src(length, kg::Node<int>(dimension));
 
     random_device rnd;
     mt19937 mt(rnd());
@@ -33,7 +34,7 @@ int main()
     
     // create matrix of model vector
     constexpr auto rows = 40, cols = 40;
-    vector<vector<Node<int>>> map(rows, vector<Node<int>>(cols));
+    vector<vector<kg::Node<int>>> map(rows, vector<kg::Node<int>>(cols));
  
     uniform_int_distribution<> randIdx(0, length - 1);
     for ( auto& row : map ) {
@@ -49,7 +50,7 @@ int main()
     constexpr auto maxIterate = 100;
     constexpr auto alpha0 = 0.1;
     constexpr auto sigma0 = 20.0;
-    auto colorSOM = make_unique<KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
+    auto colorSOM = make_unique<kg::KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
     while ( colorSOM->computeOnes() ) {
         cout << colorSOM->time() << endl;
     }

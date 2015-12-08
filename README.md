@@ -10,7 +10,7 @@ For example, if you want to use some input vector with 3-dimension...
 ```cpp
 const int length = 100;
 const int dimension = 3;
-vector<Node<int>> src(length, Node<int>(dimension));
+vector<Node<int>> src(length, kg::Node<int>(dimension));
 
 ```
 
@@ -28,7 +28,7 @@ KSOM's constructor requires the following values.
 | alpha0 | initial value of alpha |
 | sigma0 | initial value of sigma |
 
-5. Call KSOM::compute() method or KSOM::computeOnes() method.
+5. Call kg::KSOM::compute() method or kg::KSOM::computeOnes() method.
 
 # Example
 Please look at the source file **Main.cpp** in examples.  
