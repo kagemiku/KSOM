@@ -49,7 +49,8 @@ public:
 template <typename T>
 auto Node<T>::copyMember(const Node<T>& rhs) -> void
 {
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         this->elems_[i] = rhs.elems_[i];
     }
 }
@@ -93,7 +94,8 @@ template <typename T>
 auto Node<T>::operator-() const -> Node<T>
 {
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = -this->elems_[i];
     }
 
@@ -109,7 +111,8 @@ auto Node<T>::operator+(const Node& rhs) const -> Node<T>
     }
 
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] + rhs.elems_[i];
     }
 
@@ -121,7 +124,8 @@ template <typename T>
 auto Node<T>::operator+(T val) const -> Node<T>
 {
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] + val;
     }
 
@@ -137,7 +141,8 @@ auto Node<T>::operator-(const Node& rhs) const -> Node<T>
     }
 
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] - rhs.elems_[i];
     }
 
@@ -149,7 +154,8 @@ template <typename T>
 auto Node<T>::operator-(T val) const -> Node<T>
 {
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] - val;
     }
 
@@ -165,7 +171,8 @@ auto Node<T>::operator*(const Node& rhs) const -> Node<T>
     }
 
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] * rhs.elems_[i];
     }
 
@@ -177,7 +184,8 @@ template <typename T>
 auto Node<T>::operator*(T val) const -> Node<T>
 {
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] * val;
     }
 
@@ -193,7 +201,8 @@ auto Node<T>::operator/(const Node& rhs) const -> Node<T>
     }
 
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         if ( rhs.elems_[i] == static_cast<T>(0) ) {
             throw std::string("divided by zero");
         }
@@ -212,7 +221,8 @@ auto Node<T>::operator/(T val) const -> Node<T>
     }
 
     Node<T> node(size_);
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         node.elems_[i] = this->elems_[i] / val;
     }
 
@@ -244,7 +254,8 @@ auto Node<T>::operator+=(const Node& rhs)  -> Node<T>&
         throw std::string("different size");
     }
 
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] += rhs.elems_[i];
     }
 
@@ -255,7 +266,8 @@ auto Node<T>::operator+=(const Node& rhs)  -> Node<T>&
 template <typename T>
 auto Node<T>::operator+=(T val) -> Node<T>&
 {
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] += val;
     }
 
@@ -270,7 +282,8 @@ auto Node<T>::operator-=(const Node& rhs) -> Node<T>&
         throw std::string("different size");
     }
 
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] -= rhs.elems_[i];
     }
 
@@ -281,7 +294,8 @@ auto Node<T>::operator-=(const Node& rhs) -> Node<T>&
 template <typename T>
 auto Node<T>::operator-=(T val) -> Node<T>&
 {
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] -= val;
     }
 
@@ -296,7 +310,8 @@ auto Node<T>::operator*=(const Node& rhs) -> Node<T>&
         throw std::string("different size");
     }
 
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] *= rhs.elems_[i];
     }
 
@@ -307,7 +322,8 @@ auto Node<T>::operator*=(const Node& rhs) -> Node<T>&
 template <typename T>
 auto Node<T>::operator*=(T val) -> Node<T>&
 {
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] *= val;
     }
 
@@ -322,7 +338,8 @@ auto Node<T>::operator/=(const Node& rhs) -> Node<T>&
         throw std::string("different size");
     }
 
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         if ( rhs.elems_[i] == static_cast<T>(0) ) {
             throw std::string("divided by zero");
         }
@@ -340,7 +357,8 @@ auto Node<T>::operator/=(T val) -> Node<T>&
         throw std::string("divided by zero");
     }
 
-    for ( auto i = 0U; i < size_; i++ ) {
+    #pragma omp parallel for schedule(static)
+    for ( auto i = 0; i < size_; i++ ) {
         elems_[i] /= val;
     }
 
