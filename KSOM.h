@@ -135,7 +135,9 @@ template <typename T>
 auto KSOM<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double
 {
     auto dis = 0.0;
+    #ifdef _OPENMP
     #pragma omp parallel for schedule(static) reduction(+:dis)
+    #endif
     for ( int i = 0; i < dimension_; i++ ) {
         dis += pow(node1[i] - node2[i], 2.0);
     }
@@ -150,12 +152,18 @@ auto KSOM<T>::findNearestNode(int idx) const -> Position
     const auto& refNode = src_[idx];
     auto minDis = MAX_DISTANCE;
     auto minDisRow = 0, minDisCol = 0;
+    #ifdef _OPENMP
     #pragma omp parallel for schedule(static)
+    #endif
     for ( auto r = 0; r < rows_; r++ ) {
+        #ifdef _OPENMP
         #pragma omp parallel for schedule(static)
+        #endif
         for ( auto c = 0; c < cols_; c++ ) {
             auto dis = calcDistance(refNode, map_[r][c]);
+            #ifdef _OPENMP
             #pragma omp critical (updateDistance)
+            #endif
             {
                 if ( dis < minDis ) {
                     minDis = dis;
@@ -175,15 +183,21 @@ auto KSOM<T>::learnNode(int idx, const Position& nearestPoint) -> void
 {
     const auto& refNode = src_[idx];
     const auto alpha = calcAlpha(time_);
+    #ifdef _OPENMP
     #pragma omp parallel for schedule(static)
+    #endif
     for ( auto r = 0; r < rows_; r++ ) {
+        #ifdef _OPENMP
         #pragma omp parallel for schedule(static)
+        #endif
         for ( auto c = 0; c < cols_; c++ ) {
             auto currentPoint   = std::make_tuple(r, c);
             const auto dis      = calcDistance(currentPoint, nearestPoint);
             const auto h        = calcH(dis, time_);
 
+            #ifdef _OPENMP
             #pragma omp parallel for schedule(static)
+            #endif
             for ( auto i = 0; i < dimension_; i++ ) {
                 map_[r][c][i] += static_cast<T>(h*alpha*(refNode[i] - map_[r][c][i]));
             }
