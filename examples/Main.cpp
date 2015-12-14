@@ -7,6 +7,7 @@
 #include <random>
 #include "../KSOM.h"
 #include "../Node.h"
+#include "../Evaluater.h"
 using namespace std;
 
 
@@ -19,7 +20,7 @@ namespace {
 int main()
 { 
     // create array of input vector
-    constexpr auto length = 100;
+    constexpr auto length = 1600;
     constexpr auto dimension = 3;
     vector<kg::Node<int>> src(length, kg::Node<int>(dimension));
 
@@ -47,14 +48,18 @@ int main()
     
 
     // create instance of KSOM and compute
-    constexpr auto maxIterate = 100;
+    constexpr auto maxIterate = 10000;
     constexpr auto alpha0 = 0.1;
     constexpr auto sigma0 = 20.0;
     auto colorSOM = make_unique<kg::KSOM<int>>(src, map, maxIterate, alpha0, sigma0);
     while ( colorSOM->computeOnes() ) {
-        cout << colorSOM->time() << endl;
+        //cout << colorSOM->time() << endl;
     }
 
+
+    // evaluate map created by KSOM
+    auto evaluater = make_unique<kg::Evaluater<int>>(colorSOM->map());
+    cout << "evaluate value: " << evaluater->evaluateMap() << endl; 
 
     return 0;
 }
