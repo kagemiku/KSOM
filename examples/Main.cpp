@@ -52,9 +52,9 @@ int main()
     // finding best alpha0
     constexpr auto maxIterate = 10000;
     constexpr auto maxAlpha0 = 1.0f;
-    constexpr auto diffAlpha0 = 0.05f;
+    constexpr auto diffAlpha0 = 0.1f;
     constexpr auto sigma0 = 20.0;
-    constexpr auto repeat = 10;
+    constexpr auto repeat = 20;
     
     for ( auto alpha0 = diffAlpha0; alpha0 <= maxAlpha0 + EPS; alpha0 += diffAlpha0 ) {
         auto totalTime = 0;
