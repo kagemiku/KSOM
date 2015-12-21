@@ -6,7 +6,7 @@
 #include <ctime>
 #include <random>
 #include <chrono>
-#include "../Evaluater.h"
+#include "../sources/evaluater.h"
 #include "../sources/ksom.h"
 #include "../sources/node.h"
 using namespace std;
