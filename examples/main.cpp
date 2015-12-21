@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <random>
-#include "../sources/KSOM.h"
-#include "../sources/Node.h"
+#include "../sources/ksom.h"
+#include "../sources/node.h"
 using namespace std;
 
 
