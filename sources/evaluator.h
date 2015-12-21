@@ -10,7 +10,7 @@ namespace kg {
 
 
 template <typename T>
-class Evaluater {
+class Evaluator {
 private:
     std::vector<std::vector<Node<T>>> map_;
 
@@ -20,30 +20,30 @@ private:
     auto calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double;
 
 public:
-    Evaluater(const std::vector<std::vector<Node<T>>>& map);
-    Evaluater(const Evaluater<T>& rhs) = delete;
-    ~Evaluater();
-    auto operator=(const Evaluater<T>& rhs) -> Evaluater<T> = delete;
+    Evaluator(const std::vector<std::vector<Node<T>>>& map);
+    Evaluator(const Evaluator<T>& rhs) = delete;
+    ~Evaluator();
+    auto operator=(const Evaluator<T>& rhs) -> Evaluator<T> = delete;
 
     auto evaluateMap() const -> double;
 };
 
 
 template <typename T>
-Evaluater<T>::Evaluater(const std::vector<std::vector<Node<T>>>& map)
+Evaluator<T>::Evaluator(const std::vector<std::vector<Node<T>>>& map)
     :map_(map)
 {
 }
 
 
 template <typename T>
-Evaluater<T>::~Evaluater()
+Evaluator<T>::~Evaluator()
 {
 }
 
 
 template <typename T>
-auto Evaluater<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double
+auto Evaluator<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double
 {
     const auto dimension = node1.size();
     auto dis = 0.0;
@@ -59,7 +59,7 @@ auto Evaluater<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) cons
 
 
 template <typename T>
-auto Evaluater<T>::calcDistanceRightNode(unsigned int r, unsigned int c) const throw (std::string) -> double
+auto Evaluator<T>::calcDistanceRightNode(unsigned int r, unsigned int c) const throw (std::string) -> double
 {
     if ( r >= map_.size() || c >= map_[0].size() - 1 ) {
         throw std::string("out of range.");
@@ -73,7 +73,7 @@ auto Evaluater<T>::calcDistanceRightNode(unsigned int r, unsigned int c) const t
 
 
 template <typename T>
-auto Evaluater<T>::calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double
+auto Evaluator<T>::calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double
 { 
     if ( r >= map_.size() - 1 || c >= map_[0].size() ) {
         throw std::string("out of range.");
@@ -87,7 +87,7 @@ auto Evaluater<T>::calcDistanceBelowNode(unsigned int r, unsigned int c) const t
 
 
 template <typename T>
-auto Evaluater<T>::evaluateMap() const -> double
+auto Evaluator<T>::evaluateMap() const -> double
 {
     const auto rows = map_.size();
     const auto cols = map_[0].size();

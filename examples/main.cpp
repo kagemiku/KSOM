@@ -6,7 +6,7 @@
 #include <ctime>
 #include <random>
 #include <chrono>
-#include "../sources/evaluater.h"
+#include "../sources/evaluator.h"
 #include "../sources/ksom.h"
 #include "../sources/node.h"
 using namespace std;
@@ -41,8 +41,8 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
             totalTime += chrono::duration_cast<chrono::milliseconds>(diff).count();
 
             // evaluate map created by KSOM
-            auto evaluater = make_unique<kg::Evaluater<T>>(colorSOM->map());
-            auto evaluateValue = evaluater->evaluateMap();
+            auto evaluator = make_unique<kg::Evaluator<T>>(colorSOM->map());
+            auto evaluateValue = evaluator->evaluateMap();
             cout << n << ": " << evaluateValue << endl;
             totalEvaluateValue += evaluateValue;
         }
@@ -77,8 +77,8 @@ auto evaluateSigma0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
             totalTime += chrono::duration_cast<chrono::milliseconds>(diff).count();
 
             // evaluate map created by KSOM
-            auto evaluater = make_unique<kg::Evaluater<T>>(colorSOM->map());
-            auto evaluateValue = evaluater->evaluateMap();
+            auto evaluator = make_unique<kg::Evaluator<T>>(colorSOM->map());
+            auto evaluateValue = evaluator->evaluateMap();
             cout << n << ": " << evaluateValue << endl;
             totalEvaluateValue += evaluateValue;
         }
