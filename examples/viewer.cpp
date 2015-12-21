@@ -1,4 +1,4 @@
-#include "Viewer.h"
+#include "viewer.h"
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
 
