@@ -1,15 +1,23 @@
 CXX = clang++
-OPT = -std=c++1y
-TARGET = ksom
+CXXFLAGS = -std=c++1y -g -Wall
+VPATH = ../sources
+.SUFFIXES: .h .o
 
-ksom: main.o ../sources/node.h ../sources/ksom.h
-	$(CXX) $(OPT) -o $(TARGET) main.o
+program = ksom
+objs = node.o ksom.o main.o
 
-main.o: main.cpp ../sources/node.h ../sources/ksom.h
-	$(CXX) $(OPT) -c -o main.o main.cpp
+$(program): $(objs)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+.h.o:
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+main.o: main.cpp node.h ksom.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 run:
-	./$(TARGET)
+	./$(program)
 
+.PHONY: clean
 clean:
-	rm $(TARGET) *.o
+	-$(RM) $(program) $(objs)
