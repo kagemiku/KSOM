@@ -4,7 +4,7 @@ VPATH = ../sources
 .SUFFIXES: .h .o
 
 program = ksom
-objs = node.o ksom.o main.o
+objs = node.o ksom.o evaluator.o main.o
 
 $(program): $(objs)
 	$(CXX) $(CXXFLAGS) -o $@ $^
@@ -12,7 +12,7 @@ $(program): $(objs)
 .h.o:
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-main.o: main.cpp node.h ksom.h
+main.o: main.cpp node.h ksom.h evaluator.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 run:
