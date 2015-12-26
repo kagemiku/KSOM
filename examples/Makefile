@@ -17,17 +17,14 @@ $(program): $(objs)
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-viewer.o: CXXFLAGS += -I/usr/local/include
-viewer.o: viewer.cpp viewer.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
-main.o: CXXFLAGS += -I/usr/local/include
-main.o: main.cpp node.h ksom.h viewer.o
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
 ksom.o: node.h
 
-main.o: node.h ksom.h
+viewer.o: CXXFLAGS += -I/usr/local/include
+viewer.o: viewer.h
+
+main.o: CXXFLAGS += -I/usr/local/include
+main.o: node.h ksom.h viewer.o
+
 
 .PHONY: run
 run:
