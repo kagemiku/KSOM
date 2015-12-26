@@ -15,12 +15,9 @@ $(program): $(objs)
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-main.o: main.cpp node.h ksom.h evaluator.h
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
 ksom.o: node.h
 
-main.o: node.h ksom.h
+main.o: node.h ksom.h evaluator.h
 
 .PHONY: run
 run:
