@@ -1,7 +1,7 @@
 CXX = clang++
 CXXFLAGS = -std=c++1y -g -Wall
 VPATH = ../sources
-.SUFFIXES: .h .o
+.SUFFIXES: .h .cpp .o
 
 program = ksom
 objs = node.o ksom.o evaluator.o main.o
@@ -12,9 +12,17 @@ $(program): $(objs)
 .h.o:
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
 main.o: main.cpp node.h ksom.h evaluator.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+ksom.o: node.h
+
+main.o: node.h ksom.h
+
+.PHONY: run
 run:
 	./$(program)
 
