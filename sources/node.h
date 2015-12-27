@@ -12,7 +12,7 @@ class Node {
 private:
     T* elems_;
     size_t size_;
- 
+
 private:
     auto copyMember(const Node<T>& rhs) -> void;
 
@@ -43,7 +43,7 @@ public:
     auto setElem(T elem, size_t idx) -> void;
     auto elem(size_t idx) const -> T;
     auto size() const -> int;
-}; 
+};
 
 
 template <typename T>
@@ -60,15 +60,15 @@ auto Node<T>::copyMember(const Node<T>& rhs) -> void
 
 template <typename T>
 Node<T>::Node(size_t size)
-    :size_(size) 
-{ 
+    :size_(size)
+{
     elems_ = new T[size_];
     std::memset(elems_, 0, sizeof(elems_));
-} 
+}
 
 
 template <typename T>
-Node<T>::Node(const Node<T>& rhs) 
+Node<T>::Node(const Node<T>& rhs)
     :size_(rhs.size_)
 {
     elems_ = new T[size_];
@@ -78,7 +78,7 @@ Node<T>::Node(const Node<T>& rhs)
 
 template <typename T>
 Node<T>::~Node()
-{ 
+{
     delete[] elems_;
 }
 
