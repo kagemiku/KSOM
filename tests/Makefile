@@ -4,7 +4,7 @@ VPATH = ../sources
 .SUFFIXES: .h .cpp .o
 
 program = gtest
-objs = node.o ksom.o main.o node_test.o
+objs = node.o ksom.o main.o node_test.o ksom_test.o
 libs = -lgtest
 
 $(program): CXXFLAGS += -L./
@@ -22,7 +22,10 @@ ksom.o: node.h
 main.o: CXXFLAGS += -isystem googletest/googletest/include
 
 node_test.o: CXXFLAGS += -isystem googletest/googletest/include
-node_test.o: node.h
+node_test.o: node.o
+
+ksom_test.o: CXXFLAGS += -isystem googletest/googletest/include
+ksom_test.o: ksom.o node.o
 
 
 .PHONY: run
