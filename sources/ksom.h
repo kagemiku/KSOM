@@ -7,7 +7,7 @@
 #include <tuple>
 #include <limits>
 #include <cmath>
-#include "Node.h"
+#include "node.h"
 
 
 namespace kg {
@@ -47,7 +47,7 @@ private:
     inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
     inline auto findNearestNode(int idx) const -> std::tuple<int, int>;
     inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
- 
+
 public:
     KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0) throw (std::string);
     ~KSOM();
@@ -99,7 +99,7 @@ KSOM<T>::~KSOM()
 {
 }
 
- 
+
 template <typename T>
 auto KSOM<T>::calcAlpha(int time) const -> double
 {
@@ -202,7 +202,7 @@ auto KSOM<T>::learnNode(int idx, const Position& nearestPoint) -> void
                 map_[r][c][i] += static_cast<T>(h*alpha*(refNode[i] - map_[r][c][i]));
             }
         }
-    } 
+    }
 }
 
 template <typename T>
@@ -211,12 +211,12 @@ auto KSOM<T>::computeOnes() -> bool
     if ( time_ >= maxIterate_ ) {
         return false;
     }
- 
+
     const auto idx          = randIdx_(mt_);
     const auto nearestPoint = findNearestNode(idx);
     learnNode(idx, nearestPoint);
     ++time_;
-    
+
     return true;
 }
 
