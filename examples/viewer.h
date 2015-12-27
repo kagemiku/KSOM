@@ -18,7 +18,7 @@ public:
     auto operator=(const Viewer& rhs) -> Viewer* = delete;
 
 	auto showMat(const cv::Mat& source, int delay=0) -> void;
-}; 
+};
 
 
 }

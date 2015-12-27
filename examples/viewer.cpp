@@ -16,7 +16,7 @@ Viewer::Viewer(const std::string& winName)
 Viewer::~Viewer(void)
 {
     cv::destroyWindow(winName_);
-} 
+}
 
 
 auto Viewer::showMat(const cv::Mat& source, int delay) -> void
