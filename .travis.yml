@@ -1,0 +1,8 @@
+language: cpp
+compiler:
+    - clang++
+before_install:
+    - sudo apt-get update
+before_script:
+    - pwd
+script: "sh ./.travis_build.sh"

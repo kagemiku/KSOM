@@ -93,7 +93,7 @@ auto evaluateSigma0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
 
 
 int main()
-{ 
+{
     // create array of input vector
     constexpr auto length = 1600;
     constexpr auto dimension = 3;
@@ -107,11 +107,11 @@ int main()
             node[i] = randRGB(mt);
         }
     }
-    
+
     // create matrix of model vector
     constexpr auto rows = 40, cols = 40;
     vector<vector<kg::Node<int>>> map(rows, vector<kg::Node<int>>(cols));
- 
+
     uniform_int_distribution<> randIdx(0, length - 1);
     for ( auto& row : map ) {
         for ( auto& node : row ) {
@@ -120,7 +120,7 @@ int main()
             node = src[idx];
          }
     }
-    
+
 
     // finding best alpha0
     //evaluateAlpha0(src, map);

@@ -20,7 +20,7 @@ ksom.o: node.h
 main.o: node.h ksom.h evaluator.h
 
 .PHONY: run
-run:
+run: $(program)
 	./$(program)
 
 .PHONY: clean
