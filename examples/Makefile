@@ -27,7 +27,7 @@ main.o: node.h ksom.h viewer.o
 
 
 .PHONY: run
-run:
+run: $(program)
 	./$(program)
 
 .PHONY: clean

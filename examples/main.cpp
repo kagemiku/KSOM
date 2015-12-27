@@ -39,11 +39,11 @@ void createMapMat(const vector<vector<kg::Node<T>>>& map, int rows, int cols, cv
             cv::rectangle(image, rectPos1, rectPos2, rectColor, -1);
         }
     }
-} 
+}
 
 
 int main()
-{ 
+{
     // create array of input vector
     constexpr auto length = 10000;
     constexpr auto dimension = 3;
@@ -57,11 +57,11 @@ int main()
             node[i] = randRGB(mt);
         }
     }
-    
+
     // create matrix of model vector
     constexpr auto rows = 40, cols = 40;
     vector<vector<kg::Node<int>>> map(rows, vector<kg::Node<int>>(cols));
- 
+
     uniform_int_distribution<> randIdx(0, length - 1);
     for ( auto& row : map ) {
         for ( auto& node : row ) {
@@ -70,7 +70,7 @@ int main()
             node = src[idx];
          }
     }
-    
+
     // create instance of KSOM and compute
     constexpr auto maxIterate = 10000;
     constexpr auto alpha0 = 0.1;
