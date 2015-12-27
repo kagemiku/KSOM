@@ -15,7 +15,7 @@ class Evaluator {
 private:
     std::vector<std::vector<Node<T>>> map_;
 
-private: 
+private:
     auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
     auto calcDistanceRightNode(unsigned int r, unsigned int c) const throw (std::string) -> double;
     auto calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double;
@@ -68,21 +68,21 @@ auto Evaluator<T>::calcDistanceRightNode(unsigned int r, unsigned int c) const t
 
     auto& refNode1 = map_[r][c];
     auto& refNode2 = map_[r][c + 1];
-    
+
     return calcDistance(refNode1, refNode2);
 }
 
 
 template <typename T>
 auto Evaluator<T>::calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double
-{ 
+{
     if ( r >= map_.size() - 1 || c >= map_[0].size() ) {
         throw std::string("out of range.");
     }
 
     auto& refNode1 = map_[r][c];
     auto& refNode2 = map_[r + 1][c];
-    
+
     return calcDistance(refNode1, refNode2);
 }
 

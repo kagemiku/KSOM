@@ -27,7 +27,7 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
     constexpr auto diffAlpha0 = 0.1f;
     constexpr auto sigma0 = 20.0;
     constexpr auto repeat = 20;
-    
+
     for ( auto alpha0 = diffAlpha0; alpha0 <= maxAlpha0 + EPS; alpha0 += diffAlpha0 ) {
         auto totalTime = 0;
         auto totalEvaluateValue = 0.0f;
@@ -50,7 +50,7 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
         auto meanTime = static_cast<double>(totalTime)/static_cast<double>(repeat);
         auto meanEvaluateValue = static_cast<double>(totalEvaluateValue)/static_cast<double>(repeat);
         cout << "alpha0: " << alpha0 << " ..." << meanTime << "[ms]" << endl;
-        cout << "evaluate value: " << meanEvaluateValue << endl; 
+        cout << "evaluate value: " << meanEvaluateValue << endl;
         cout << endl;
     }
 }
@@ -63,7 +63,7 @@ auto evaluateSigma0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
     constexpr auto alpha0 = 0.8f;
     constexpr auto diffSigma0 = 5.0f;
     constexpr auto repeat = 1;
-    
+
     for ( auto sigma0 = static_cast<double>(size); sigma0 >= 0.0f - EPS; sigma0 -= diffSigma0 ) {
         auto totalTime = 0;
         auto totalEvaluateValue = 0.0f;
@@ -86,7 +86,7 @@ auto evaluateSigma0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
         auto meanTime = static_cast<double>(totalTime)/static_cast<double>(repeat);
         auto meanEvaluateValue = static_cast<double>(totalEvaluateValue)/static_cast<double>(repeat);
         cout << "sigma0: " << sigma0 << " ..." << meanTime << "[ms]" << endl;
-        cout << "evaluate value: " << meanEvaluateValue << endl; 
+        cout << "evaluate value: " << meanEvaluateValue << endl;
         cout << endl;
     }
 }
