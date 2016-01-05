@@ -7,7 +7,7 @@
 #include <tuple>
 #include <limits>
 #include <cmath>
-#include "node.h"
+#include "node.hpp"
 
 
 namespace kg {
