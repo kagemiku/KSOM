@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KG_KSOM_H
+#define KG_KSOM_H
+
 
 #include <iostream>
 #include <string>
@@ -244,3 +246,7 @@ auto KSOM<T>::map() const -> std::vector<std::vector<Node<T>>>
 
 
 }
+
+
+#endif
+

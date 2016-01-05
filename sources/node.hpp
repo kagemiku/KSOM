@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KG_NODE_H
+#define KG_NODE_H
+
 
 #include <string>
 #include <cstring>
@@ -443,4 +445,7 @@ auto Node<T>::size() const -> int
 
 
 }
+
+
+#endif
 
