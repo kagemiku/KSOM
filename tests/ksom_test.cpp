@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <string>
 #include <vector>
-#include "../sources/node.h"
-#include "../sources/ksom.h"
+#include "../sources/node.hpp"
+#include "../sources/ksom.hpp"
 
 
 class KSOMTest : public ::testing::Test {

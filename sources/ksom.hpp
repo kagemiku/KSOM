@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KG_KSOM_H
+#define KG_KSOM_H
+
 
 #include <iostream>
 #include <string>
@@ -7,7 +9,7 @@
 #include <tuple>
 #include <limits>
 #include <cmath>
-#include "node.h"
+#include "node.hpp"
 
 
 namespace kg {
@@ -244,3 +246,7 @@ auto KSOM<T>::map() const -> std::vector<std::vector<Node<T>>>
 
 
 }
+
+
+#endif
+
