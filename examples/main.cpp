@@ -7,8 +7,8 @@
 #include <random>
 #include <chrono>
 #include "../sources/evaluator.h"
-#include "../sources/ksom.h"
-#include "../sources/node.h"
+#include "../sources/ksom.hpp"
+#include "../sources/node.hpp"
 using namespace std;
 
 
