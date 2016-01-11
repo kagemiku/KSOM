@@ -22,7 +22,7 @@ private:
     auto calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double;
 
 public:
-    Evaluator(const std::vector<std::vector<Node<T>>>& map);
+    Evaluator(const std::vector<std::vector<Node<T>>>& map) throw (std::string);
     Evaluator(const Evaluator<T>& rhs) = delete;
     ~Evaluator();
     auto operator=(const Evaluator<T>& rhs) -> Evaluator<T> = delete;
@@ -32,9 +32,19 @@ public:
 
 
 template <typename T>
-Evaluator<T>::Evaluator(const std::vector<std::vector<Node<T>>>& map)
+Evaluator<T>::Evaluator(const std::vector<std::vector<Node<T>>>& map) throw (std::string)
     :map_(map)
 {
+    for ( const auto& row : map_ ) {
+        if ( row.size() != map_[0].size() ) {
+            throw std::string("number of columns in map is different.");
+        }
+        for ( const auto& node : row ) {
+            if ( node.size() != map_[0][0].size() ) {
+                throw std::string("dimension of map node is different.");
+            }
+        }
+    }
 }
 
 
