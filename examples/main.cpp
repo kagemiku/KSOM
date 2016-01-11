@@ -22,15 +22,15 @@ namespace {
 template <typename T>
 auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node<T>>& map) -> void
 {
-    constexpr auto maxIterate = 500*10000;
-    constexpr auto maxAlpha0 = 1.0f;
-    constexpr auto diffAlpha0 = 0.1f;
-    constexpr auto sigma0 = 50.0;
-    constexpr auto repeat = 5;
+    const auto maxIterate       = 500*source.size();
+    constexpr auto maxAlpha0    = 1.0;
+    constexpr auto diffAlpha0   = 0.1;
+    constexpr auto sigma0       = 5.0;
+    constexpr auto repeat       = 10;
 
     for ( auto alpha0 = diffAlpha0; alpha0 <= maxAlpha0 + EPS; alpha0 += diffAlpha0 ) {
-        auto totalTime = 0;
-        auto totalEvaluationValue = 0.0f;
+        auto totalTime              = 0;
+        auto totalEvaluationValue   = 0.0;
         for ( auto n = 0; n < repeat; n++ ) {
             // create instance of KSOM and compute
             auto colorSOM   = make_unique<kg::KSOM<T>>(source, map, maxIterate, alpha0, sigma0);
@@ -59,14 +59,14 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
 template <typename T>
 auto evaluateSigma0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node<T>>& map, int size) -> void
 {
-    constexpr auto maxIterate = 10000;
-    constexpr auto alpha0 = 0.8f;
-    constexpr auto diffSigma0 = 5.0f;
-    constexpr auto repeat = 1;
+    constexpr auto maxIterate   = 10000;
+    constexpr auto alpha0       = 0.8;
+    constexpr auto diffSigma0   = 5.0;
+    constexpr auto repeat       = 1;
 
-    for ( auto sigma0 = static_cast<double>(size); sigma0 >= 0.0f - EPS; sigma0 -= diffSigma0 ) {
+    for ( auto sigma0 = static_cast<double>(size); sigma0 >= 0.0 - EPS; sigma0 -= diffSigma0 ) {
         auto totalTime = 0;
-        auto totalEvaluationValue = 0.0f;
+        auto totalEvaluationValue = 0.0;
         for ( auto n = 0; n < repeat; n++ ) {
             // create instance of KSOM and compute
             auto colorSOM   = make_unique<kg::KSOM<T>>(source, map, maxIterate, alpha0, sigma0);
@@ -95,8 +95,8 @@ auto evaluateSigma0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
 int main()
 {
     // create array of input vector
-    constexpr auto length = 10000;
-    constexpr auto dimension = 3;
+    constexpr auto length       = 100;
+    constexpr auto dimension    = 3;
     vector<kg::Node<int>> src(length, kg::Node<int>(dimension));
 
     random_device rnd;
@@ -109,7 +109,7 @@ int main()
     }
 
     // create matrix of model vector
-    constexpr auto rows = 100, cols = 100;
+    constexpr auto rows = 10, cols = 10;
     kg::Matrix<kg::Node<int>> map(rows, vector<kg::Node<int>>(cols));
 
     uniform_int_distribution<> randIdx(0, length - 1);
