@@ -1,9 +1,10 @@
-#pragma once
+#ifndef KG_EVALUATOR_H
+#define KG_EVALUATOR_H
 
 #include <string>
 #include <vector>
 #include <cmath>
-#include "node.h"
+#include "node.hpp"
 
 
 namespace kg {
@@ -110,3 +111,7 @@ auto Evaluator<T>::evaluateMap() const -> double
 
 
 }
+
+
+#endif
+

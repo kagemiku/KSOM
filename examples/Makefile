@@ -17,7 +17,7 @@ $(program): $(objs)
 
 ksom.o: node.hpp
 
-main.o: node.hpp ksom.hpp evaluator.h
+main.o: node.hpp ksom.hpp evaluator.hpp
 
 .PHONY: run
 run: $(program)
