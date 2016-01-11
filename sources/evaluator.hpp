@@ -106,8 +106,10 @@ auto Evaluator<T>::evaluateMap() const -> double
 
     auto evaluateValue = 0.0;
     for ( auto r = 0; r < rows; r++ ) {
-        for ( auto c = 0; c < cols - 1; c++ ) {
-            evaluateValue += calcDistanceRightNode(r, c);
+        for ( auto c = 0; c < cols; c++ ) {
+            if ( c != cols - 1 ) {
+                evaluateValue += calcDistanceRightNode(r, c);
+            }
 
             if ( r != rows - 1 ) {
                 evaluateValue += calcDistanceBelowNode(r, c);
