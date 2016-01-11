@@ -93,7 +93,6 @@ auto Evaluator<T>::evaluateMap() const -> double
 {
     const auto rows = map_.size();
     const auto cols = map_[0].size();
-    const auto dimension = map_[0][0].size();
 
     auto evaluateValue = 0.0;
     for ( auto r = 0; r < rows; r++ ) {
