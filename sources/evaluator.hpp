@@ -4,48 +4,32 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <limits>
 #include "node.hpp"
 
 
 namespace kg {
 
 
+template <typename T>
+using Matrix = std::vector<std::vector<T>>;
+
 
 template <typename T>
 class Evaluator {
 private:
-    std::vector<std::vector<Node<T>>> map_;
-
-private:
-    auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
-    auto calcDistanceRightNode(unsigned int r, unsigned int c) const throw (std::string) -> double;
-    auto calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double;
+    static auto isValidArgs(const std::vector<kg::Node<T>>& source, const Matrix<kg::Node<T>>& map) -> bool;
+    static auto calcDistance(const Node<T>& node1, const Node<T>& node2) -> double;
+    static auto findNearestNode(const kg::Node<T>& node, const Matrix<kg::Node<T>>& map) -> kg::Node<T>;
 
 public:
-    Evaluator(const std::vector<std::vector<Node<T>>>& map) throw (std::string);
+    Evaluator() = delete;
     Evaluator(const Evaluator<T>& rhs) = delete;
     ~Evaluator();
     auto operator=(const Evaluator<T>& rhs) -> Evaluator<T> = delete;
 
-    auto evaluateMap() const -> double;
+    static auto evaluateMap(const std::vector<kg::Node<T>>& source, const Matrix<kg::Node<T>>& map) throw (std::string) -> double;
 };
-
-
-template <typename T>
-Evaluator<T>::Evaluator(const std::vector<std::vector<Node<T>>>& map) throw (std::string)
-    :map_(map)
-{
-    for ( const auto& row : map_ ) {
-        if ( row.size() != map_[0].size() ) {
-            throw std::string("number of columns in map is different.");
-        }
-        for ( const auto& node : row ) {
-            if ( node.size() != map_[0][0].size() ) {
-                throw std::string("dimension of map node is different.");
-            }
-        }
-    }
-}
 
 
 template <typename T>
@@ -55,7 +39,35 @@ Evaluator<T>::~Evaluator()
 
 
 template <typename T>
-auto Evaluator<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double
+auto Evaluator<T>::isValidArgs(const std::vector<kg::Node<T>>& source, const Matrix<kg::Node<T>>& map) -> bool
+{
+    if ( source[0].size() != map[0][0].size() ) {
+        return false;
+    }
+
+    for ( auto node : source ) {
+        if ( node.size() != source[0].size() ) {
+            return false;
+        }
+    }
+
+    for ( const auto& row : map ) {
+        if ( row.size() != map[0].size() ) {
+            return false;
+        }
+        for ( const auto& node : row ) {
+            if ( node.size() != map[0][0].size() ) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+template <typename T>
+auto Evaluator<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) -> double
 {
     const auto dimension = node1.size();
     auto dis = 0.0;
@@ -69,55 +81,55 @@ auto Evaluator<T>::calcDistance(const Node<T>& node1, const Node<T>& node2) cons
     return sqrt(dis);
 }
 
-
 template <typename T>
-auto Evaluator<T>::calcDistanceRightNode(unsigned int r, unsigned int c) const throw (std::string) -> double
+auto Evaluator<T>::findNearestNode(const kg::Node<T>& node, const Matrix<kg::Node<T>>& map) -> kg::Node<T>
 {
-    if ( r >= map_.size() || c >= map_[0].size() - 1 ) {
-        throw std::string("out of range.");
-    }
-
-    auto& refNode1 = map_[r][c];
-    auto& refNode2 = map_[r][c + 1];
-
-    return calcDistance(refNode1, refNode2);
-}
-
-
-template <typename T>
-auto Evaluator<T>::calcDistanceBelowNode(unsigned int r, unsigned int c) const throw (std::string) -> double
-{
-    if ( r >= map_.size() - 1 || c >= map_[0].size() ) {
-        throw std::string("out of range.");
-    }
-
-    auto& refNode1 = map_[r][c];
-    auto& refNode2 = map_[r + 1][c];
-
-    return calcDistance(refNode1, refNode2);
-}
-
-
-template <typename T>
-auto Evaluator<T>::evaluateMap() const -> double
-{
-    const auto rows = map_.size();
-    const auto cols = map_[0].size();
-
-    auto evaluateValue = 0.0;
+    const auto rows = map.size();
+    const auto cols = map[0].size();
+    auto minDis = std::numeric_limits<double>::max();
+    auto minDisRow = 0, minDisCol = 0;
+    #ifdef _OPENMP
+    #pragma omp parallel for schedule(static)
+    #endif
     for ( auto r = 0; r < rows; r++ ) {
+        #ifdef _OPENMP
+        #pragma omp parallel for schedule(static)
+        #endif
         for ( auto c = 0; c < cols; c++ ) {
-            if ( c != cols - 1 ) {
-                evaluateValue += calcDistanceRightNode(r, c);
-            }
-
-            if ( r != rows - 1 ) {
-                evaluateValue += calcDistanceBelowNode(r, c);
+            auto dis = calcDistance(node, map[r][c]);
+            #ifdef _OPENMP
+            #pragma omp critical (updateDistance)
+            #endif
+            {
+                if ( dis < minDis ) {
+                    minDis      = dis;
+                    minDisRow   = r;
+                    minDisCol   = c;
+                }
             }
         }
     }
 
-    return evaluateValue;
+    return map[minDisRow][minDisCol];
+}
+
+
+template <typename T>
+auto Evaluator<T>::evaluateMap(const std::vector<kg::Node<T>>& source, const Matrix<kg::Node<T>>& map) throw (std::string) -> double
+{
+    if ( !isValidArgs(source, map) ) {
+        throw std::string("invalid arguments");
+    }
+
+    auto evaluationValue = 0.0;
+    for ( const auto& node : source ) {
+        const auto nearestNode  = findNearestNode(node, map);
+        const auto dis          = calcDistance(node, nearestNode);
+
+        evaluationValue += dis;
+    }
+
+    return evaluationValue;
 }
 
 

@@ -8,20 +8,22 @@
 
 class EvaluatorTest : public ::testing::Test {
 protected:
-    template <typename T>
-    using Matrix = std::vector<std::vector<T>>;
-
+    const int length;
     const int rows;
     const int cols;
     const int dimension;
-    kg::Node<int> node1;
-    kg::Node<int> node2;
-    Matrix<kg::Node<int>> validMap;
-    Matrix<kg::Node<int>> invalidMap;
+    std::vector<kg::Node<int>> validSource1;
+    std::vector<kg::Node<int>> validSource2;
+    std::vector<kg::Node<int>> invalidSource1;
+    std::vector<kg::Node<int>> invalidSource2;
+    kg::Matrix<kg::Node<int>> validMap1;
+    kg::Matrix<kg::Node<int>> validMap2;
+    kg::Matrix<kg::Node<int>> invalidMap;
 
 protected:
     EvaluatorTest()
-        :rows(2)
+        :length(2)
+        ,rows(2)
         ,cols(2)
         ,dimension(1)
     {
@@ -33,22 +35,46 @@ protected:
 
     virtual auto SetUp() -> void
     {
-        node1 = kg::Node<int>(dimension);
-        node2 = kg::Node<int>(dimension);
+        kg::Node<int> node1(dimension);
+        kg::Node<int> node2(dimension);
         node1[0] = 0;
         node2[0] = 1;
 
-        validMap        = Matrix<kg::Node<int>>(rows, std::vector<kg::Node<int>>(cols));
-        validMap[0][0]  = node1;
-        validMap[0][1]  = node1;
-        validMap[1][0]  = node1;
-        validMap[1][1]  = node1;
+        kg::Node<int> invalidNode(dimension + 1);
 
-        invalidMap          = Matrix<kg::Node<int>>(rows, std::vector<kg::Node<int>>(cols));
+        validSource1    = std::vector<kg::Node<int>>(length);
+        validSource1[0] = node1;
+        validSource1[1] = node1;
+
+        validSource2    = std::vector<kg::Node<int>>(length);
+        validSource2[0] = node2;
+        validSource2[1] = node2;
+
+        invalidSource1      = std::vector<kg::Node<int>>(length);
+        invalidSource1[0]   = node1;
+        invalidSource1[1]   = invalidNode;
+
+        invalidSource2      = std::vector<kg::Node<int>>(length);
+        invalidSource2[0]   = invalidNode;
+        invalidSource2[1]   = invalidNode;
+
+        validMap1       = kg::Matrix<kg::Node<int>>(rows, std::vector<kg::Node<int>>(cols));
+        validMap1[0][0] = node1;
+        validMap1[0][1] = node1;
+        validMap1[1][0] = node1;
+        validMap1[1][1] = node1;
+
+        validMap2       = kg::Matrix<kg::Node<int>>(rows, std::vector<kg::Node<int>>(cols));
+        validMap2[0][0] = node1;
+        validMap2[0][1] = node2;
+        validMap2[1][0] = node2;
+        validMap2[1][1] = node1;
+
+        invalidMap          = kg::Matrix<kg::Node<int>>(rows, std::vector<kg::Node<int>>(cols));
         invalidMap[0][0]    = node1;
         invalidMap[0][1]    = node1;
         invalidMap[1][0]    = node1;
-        invalidMap[1][1]    = kg::Node<int>(dimension + 1);
+        invalidMap[1][1]    = invalidNode;
     }
 
     virtual auto TearDown() -> void
@@ -64,40 +90,29 @@ protected:
     }
 };
 
-TEST_F(EvaluatorTest, Initialization)
+TEST_F(EvaluatorTest, CheckingArguments)
 {
-    ASSERT_THROW(std::move(kg::Evaluator<int>(invalidMap)), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(invalidSource1, validMap1), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(invalidSource2, validMap1), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(invalidSource1, validMap2), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(invalidSource2, validMap2), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(validSource1, invalidMap), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(validSource2, invalidMap), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(invalidSource1, invalidMap), std::string);
+    ASSERT_THROW(kg::Evaluator<int>::evaluateMap(invalidSource2, invalidMap), std::string);
 
-    Matrix<kg::Node<int>> invalidMap2(rows);
-    invalidMap2[0]      = std::vector<kg::Node<int>>(cols);
-    invalidMap2[1]      = std::vector<kg::Node<int>>(cols - 1);
-    invalidMap2[0][0]   = node1;
-    invalidMap2[0][1]   = node1;
-    invalidMap2[1][0]   = node1;
-    ASSERT_THROW(std::move(kg::Evaluator<int>(invalidMap2)), std::string);
-
-    auto invalidMap3    = Matrix<kg::Node<int>>(rows, std::vector<kg::Node<int>>(cols));
-    invalidMap3[0][0]   = node1;
-    invalidMap3[0][1]   = node1;
-    invalidMap3[1][0]   = node1;
-    invalidMap3[1][1]   = kg::Node<int>(dimension + 1);
-    ASSERT_THROW(std::move(kg::Evaluator<int>(invalidMap3)), std::string);
-
-    ASSERT_NO_THROW(std::move(kg::Evaluator<int>(validMap)));
+    ASSERT_NO_THROW(kg::Evaluator<int>::evaluateMap(validSource1, validMap1));
+    ASSERT_NO_THROW(kg::Evaluator<int>::evaluateMap(validSource2, validMap1));
+    ASSERT_NO_THROW(kg::Evaluator<int>::evaluateMap(validSource1, validMap2));
+    ASSERT_NO_THROW(kg::Evaluator<int>::evaluateMap(validSource2, validMap2));
 }
 
 TEST_F(EvaluatorTest, EvaluationMap)
 {
-    kg::Evaluator<int> evaluator1(validMap);
-    ASSERT_DOUBLE_EQ(0.0, evaluator1.evaluateMap());
+    ASSERT_DOUBLE_EQ(0.0, kg::Evaluator<int>::evaluateMap(validSource1, validMap1));
+    ASSERT_DOUBLE_EQ(2.0, kg::Evaluator<int>::evaluateMap(validSource2, validMap1));
 
-    Matrix<kg::Node<int>> validMap2(rows, std::vector<kg::Node<int>>(cols));
-    validMap2[0][0] = node1;
-    validMap2[0][1] = node2;
-    validMap2[1][0] = node2;
-    validMap2[1][1] = node1;
-
-    kg::Evaluator<int> evaluator2(validMap2);
-    ASSERT_DOUBLE_EQ(4.0, evaluator2.evaluateMap());
+    ASSERT_DOUBLE_EQ(0.0, kg::Evaluator<int>::evaluateMap(validSource1, validMap2));
+    ASSERT_DOUBLE_EQ(0.0, kg::Evaluator<int>::evaluateMap(validSource2, validMap2));
 }
 

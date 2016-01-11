@@ -20,7 +20,7 @@ namespace {
 
 
 template <typename T>
-auto evaluateAlpha0(const vector<kg::Node<T>>& source, const vector<vector<kg::Node<T>>>& map) -> void
+auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node<T>>& map) -> void
 {
     constexpr auto maxIterate = 500*10000;
     constexpr auto maxAlpha0 = 1.0f;
@@ -41,8 +41,8 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const vector<vector<kg::N
             totalTime += chrono::duration_cast<chrono::milliseconds>(diff).count();
 
             // evaluate map created by KSOM
-            auto evaluator          = make_unique<kg::Evaluator<T>>(colorSOM->map());
-            auto evaluationValue    = evaluator->evaluateMap();
+            auto resultMap          = colorSOM->map();
+            auto evaluationValue    = kg::Evaluator<T>::evaluateMap(source, resultMap);
             cout << n << ": " << evaluationValue << endl;
             totalEvaluationValue += evaluationValue;
         }
@@ -110,7 +110,7 @@ int main()
 
     // create matrix of model vector
     constexpr auto rows = 100, cols = 100;
-    vector<vector<kg::Node<int>>> map(rows, vector<kg::Node<int>>(cols));
+    kg::Matrix<kg::Node<int>> map(rows, vector<kg::Node<int>>(cols));
 
     uniform_int_distribution<> randIdx(0, length - 1);
     for ( auto& row : map ) {
