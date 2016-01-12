@@ -4,10 +4,11 @@ VPATH = ../sources
 .SUFFIXES: .hpp .cpp .o
 
 program = ksom
-objs = node.o ksom.o evaluator.o main.o
+objs = node.o ksom.o evaluator.o viewer.o main.o
+libs = -lopencv_highgui -lopencv_core
 
 $(program): $(objs)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -L/usr/local/lib $(libs) -o $@ $^
 
 .hpp.o:
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -17,7 +18,11 @@ $(program): $(objs)
 
 ksom.o: node.hpp
 
-main.o: node.hpp ksom.hpp evaluator.hpp
+viewer.o: CXXFLAGS += -I/usr/local/include
+viewer.o: viewer.h
+
+main.o: CXXFLAGS += -I/usr/local/include
+main.o: node.hpp ksom.hpp evaluator.hpp viewer.o
 
 .PHONY: run
 run: $(program)

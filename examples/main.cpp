@@ -6,16 +6,29 @@
 #include <ctime>
 #include <random>
 #include <chrono>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include "../sources/ksom.hpp"
 #include "../sources/node.hpp"
 #include "../sources/evaluator.hpp"
+#include "viewer.h"
+
+#ifdef _MSC_VER
+#include "opencv_lib.hpp"
+#endif
+
 using namespace std;
 
 
 namespace {
-    constexpr auto RGB_MIN = 0;
-    constexpr auto RGB_MAX = 255;
-    constexpr auto EPS = 10e-6;
+    constexpr auto EPS              = 10e-6;
+    constexpr auto RGB_MIN          = 0;
+    constexpr auto RGB_MAX          = 255;
+    constexpr auto RED_IDX          = 2;
+    constexpr auto GREEN_IDX        = 1;
+    constexpr auto BLUE_IDX         = 0;
+    constexpr auto VIEWER_WIDTH     = 800;
+    constexpr auto VIEWER_HEIGHT    = 800;
 }
 
 
@@ -92,6 +105,23 @@ auto evaluateSigma0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
 }
 
 
+template <typename T>
+void createMapMat(const vector<vector<kg::Node<T>>>& map, int rows, int cols, cv::Mat& image)
+{
+    const auto blockWidth= VIEWER_WIDTH/cols;
+    const auto blockHeight  = VIEWER_HEIGHT/rows;
+
+    for ( auto r = 0; r < rows; r++ ) {
+        for ( auto c = 0; c < cols; c++ ) {
+            cv::Point rectPos1(c * blockWidth, r * blockHeight);
+            cv::Point rectPos2((c + 1) * blockWidth, (r + 1) * blockHeight);
+            cv::Scalar rectColor(map[r][c][BLUE_IDX], map[r][c][GREEN_IDX], map[r][c][RED_IDX]);
+            cv::rectangle(image, rectPos1, rectPos2, rectColor, -1);
+        }
+    }
+}
+
+
 int main()
 {
     // create array of input vector
@@ -120,7 +150,6 @@ int main()
             node = src[idx];
          }
     }
-
 
     // finding best alpha0
     evaluateAlpha0(src, map);
