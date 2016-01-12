@@ -99,7 +99,7 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
         auto totalEvaluationValue   = 0.0;
         for ( auto n = 0; n < repeat; n++ ) {
             // create instance of KSOM and compute
-            auto colorSOM       = make_unique<kg::KSOM<T>>(source, map, maxIterate, alpha0, sigma0);
+            auto colorSOM       = make_unique<kg::KSOM<T>>(source, map, maxIterate, alpha0, sigma0, false);
             auto originalMat    = cv::Mat(cv::Size(matWidth, matHeight), CV_8UC3, cv::Scalar::all(0));
             createMapMat(colorSOM->map(), rows, cols, originalMat);
             cv::imwrite(fileNameOfMat(SavingType::ORIGINAL, to_string(alpha0)), originalMat);
