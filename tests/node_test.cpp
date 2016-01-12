@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <string>
-#include "../sources/node.h"
+#include "../sources/node.hpp"
 
 
 class NodeTest : public ::testing::Test {

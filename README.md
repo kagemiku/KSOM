@@ -5,7 +5,7 @@ KSOM is a simple header for SOM.
 You can use this very easily.
 
 # Usage
-#### 1. Include KSOM.h in your code.
+#### 1. Include KSOM.hpp in your code.
 
 #### 2. Create array of input vector.
 For example, if you want to use some input vector with 3-dimension...

@@ -9,8 +9,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv_lib.hpp"
 #include "viewer.h"
-#include "../sources/ksom.h"
-#include "../sources/node.h"
+#include "../sources/ksom.hpp"
+#include "../sources/node.hpp"
 using namespace std;
 
 

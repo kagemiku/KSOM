@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KG_NODE_H
+#define KG_NODE_H
+
 
 #include <string>
 #include <cstring>
@@ -63,7 +65,7 @@ Node<T>::Node(size_t size)
     :size_(size)
 {
     elems_ = new T[size_];
-    std::memset(elems_, 0, sizeof(elems_));
+    std::memset(elems_, 0, sizeof(T)*size_);
 }
 
 
@@ -443,4 +445,7 @@ auto Node<T>::size() const -> int
 
 
 }
+
+
+#endif
 
