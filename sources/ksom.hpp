@@ -25,6 +25,8 @@ class KSOM {
 private:
     using Position = std::tuple<int, int>;
 
+    const bool randomIndex_;
+
     const std::vector<Node<T>> src_;
     const int length_;
     const int dimension_;
@@ -47,11 +49,12 @@ private:
     inline auto calcH(double distance, int time) const -> double;
     inline auto calcDistance(const Position& pt1, const Position& pt2) const -> double;
     inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
+    inline auto nextIndex() -> unsigned int;
     inline auto findNearestNode(int idx) const -> std::tuple<int, int>;
     inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
 
 public:
-    KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0) throw (std::string);
+    KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0, bool randomly=true) throw (std::string);
     ~KSOM();
 
     auto computeOnes() -> bool;
@@ -62,8 +65,9 @@ public:
 
 
 template <typename T>
-KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0) throw (std::string)
-    :src_(src)
+KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0, bool randomly) throw (std::string)
+    :randomIndex_(randomly)
+    ,src_(src)
     ,length_(src_.size())
     ,dimension_(src[0].size())
     ,map_(map)
@@ -130,6 +134,20 @@ auto KSOM<T>::calcDistance(const Position& pt1, const Position& pt2) const -> do
     const auto x2 = std::get<0>(pt2), y2 = std::get<1>(pt2);
 
     return sqrt(pow(x1 - x2, 2.0) + pow(y1 - y2, 2.0));
+}
+
+
+template <typename T>
+auto KSOM<T>::nextIndex() -> unsigned int
+{
+    auto index = 0U;
+    if ( randomIndex_ ) {
+        index = randIdx_(mt_);
+    } else {
+        index = time_ % src_.size();
+    }
+
+    return index;
 }
 
 
@@ -214,7 +232,7 @@ auto KSOM<T>::computeOnes() -> bool
         return false;
     }
 
-    const auto idx          = randIdx_(mt_);
+    const auto idx          = nextIndex();
     const auto nearestPoint = findNearestNode(idx);
     learnNode(idx, nearestPoint);
     ++time_;
