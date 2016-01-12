@@ -7,9 +7,8 @@ program = ksom
 objs = node.o ksom.o viewer.o main.o
 libs = -lopencv_highgui -lopencv_core
 
-$(program): CXXFLAGS += -L/usr/local/lib
 $(program): $(objs)
-	$(CXX) $(CXXFLAGS) $(libs) -o $@ $^
+	$(CXX) $(CXXFLAGS) -L/usr/local/lib $(libs) -o $@ $^
 
 .hpp.o:
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
