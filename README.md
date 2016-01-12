@@ -22,12 +22,13 @@ In mane cases, we use input vecor at random to initialize matrix of model vector
 KSOM's constructor requires the following values.
 
 | name | description |
-|:-----: |:----- |
-| src | array of input vector |
-| map | matrix of model vector |
-| maxIterate | number of iteration |
-| alpha0 | initial value of alpha |
-| sigma0 | initial value of sigma |
+|:-----: |:-----: |
+| src | Array of input vector |
+| map | Matrix of model vector |
+| maxIterate | Number of iteration |
+| alpha0 | Initial value of alpha |
+| sigma0 | Initial value of sigma |
+| randomly(**optional**) | Whether SOM randomly compute map or not (default value is **true**)|
 
 #### 5. Call kg::KSOM::compute() method or kg::KSOM::computeOnes() method.
 
