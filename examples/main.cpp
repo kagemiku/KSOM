@@ -7,10 +7,14 @@
 #include <random>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "opencv_lib.hpp"
 #include "viewer.h"
 #include "../sources/ksom.hpp"
 #include "../sources/node.hpp"
+
+#ifdef _MSC_VER
+#include "opencv_lib.hpp"
+#endif
+
 using namespace std;
 
 
