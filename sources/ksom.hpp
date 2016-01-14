@@ -54,7 +54,9 @@ private:
     inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
 
 public:
-    KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0, bool randomly=true) throw (std::string);
+    KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map,
+            int maxIterate, double alpha0, double sigma0,
+            bool randomly=true) throw (std::string);
     ~KSOM();
 
     auto computeOnes() -> bool;
@@ -65,7 +67,8 @@ public:
 
 
 template <typename T>
-KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map, int maxIterate, double alpha0, double sigma0, bool randomly) throw (std::string)
+KSOM<T>::KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map,
+        int maxIterate, double alpha0, double sigma0, bool randomly) throw (std::string)
     :randomIndex_(randomly)
     ,src_(src)
     ,length_(src_.size())
