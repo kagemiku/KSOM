@@ -130,42 +130,6 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
 }
 
 
-template <typename T>
-auto evaluateSigma0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node<T>>& map, int size) -> void
-{
-    constexpr auto maxIterate   = 10000;
-    constexpr auto alpha0       = 0.8;
-    constexpr auto diffSigma0   = 5.0;
-    constexpr auto repeat       = 1;
-
-    for ( auto sigma0 = static_cast<double>(size); sigma0 >= 0.0 - EPS; sigma0 -= diffSigma0 ) {
-        auto totalTime = 0;
-        auto totalEvaluationValue = 0.0;
-        for ( auto n = 0; n < repeat; n++ ) {
-            // create instance of KSOM and compute
-            auto colorSOM   = make_unique<kg::KSOM<T>>(source, map, maxIterate, alpha0, sigma0);
-            auto start      = chrono::system_clock::now();
-            colorSOM->compute();
-            auto end        = chrono::system_clock::now();
-            auto diff       = end - start;
-            totalTime += chrono::duration_cast<chrono::milliseconds>(diff).count();
-
-            // evaluate map created by KSOM
-            auto resultMap          = colorSOM->map();
-            auto evaluationValue    = kg::Evaluator<T>::evaluateMap(source, resultMap);
-            cout << n << ": " << evaluationValue << endl;
-            totalEvaluationValue += evaluationValue;
-        }
-
-        auto meanTime               = static_cast<double>(totalTime)/static_cast<double>(repeat);
-        auto meanEvaluationValue    = static_cast<double>(totalEvaluationValue)/static_cast<double>(repeat);
-        cout << "sigma0: " << sigma0 << " ..." << meanTime << "[ms]" << endl;
-        cout << "evaluation value: " << meanEvaluationValue << endl;
-        cout << endl;
-    }
-}
-
-
 int main()
 {
     // create array of input vector
@@ -194,9 +158,6 @@ int main()
 
     // finding best alpha0
     evaluateAlpha0(src, map);
-
-    // finding best sigma0
-    //evaluateSigma0(src, map, rows);
 
     return 0;
 }
