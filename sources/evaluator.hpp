@@ -20,11 +20,11 @@ template <typename T>
 class Evaluator {
 private:
     static auto isValidArgs(const std::vector<kg::Node<T>>& source,
-            const Matrix<kg::Node<T>>& map) -> bool;
+                            const Matrix<kg::Node<T>>& map) -> bool;
     static auto calcDistance(const Node<T>& node1,
-            const Node<T>& node2) -> double;
+                                const Node<T>& node2) -> double;
     static auto findNearestNode(const kg::Node<T>& node,
-            const Matrix<kg::Node<T>>& map) -> kg::Node<T>;
+                                const Matrix<kg::Node<T>>& map) -> kg::Node<T>;
 
 public:
     Evaluator() = delete;
@@ -45,7 +45,7 @@ Evaluator<T>::~Evaluator()
 
 template <typename T>
 auto Evaluator<T>::isValidArgs(const std::vector<kg::Node<T>>& source,
-        const Matrix<kg::Node<T>>& map) -> bool
+                                const Matrix<kg::Node<T>>& map) -> bool
 {
     if ( source[0].size() != map[0][0].size() ) {
         return false;
@@ -74,7 +74,7 @@ auto Evaluator<T>::isValidArgs(const std::vector<kg::Node<T>>& source,
 
 template <typename T>
 auto Evaluator<T>::calcDistance(const Node<T>& node1,
-        const Node<T>& node2) -> double
+                                const Node<T>& node2) -> double
 {
     const auto dimension = node1.size();
     auto dis = 0.0;
@@ -89,7 +89,8 @@ auto Evaluator<T>::calcDistance(const Node<T>& node1,
 }
 
 template <typename T>
-auto Evaluator<T>::findNearestNode(const kg::Node<T>& node, const Matrix<kg::Node<T>>& map) -> kg::Node<T>
+auto Evaluator<T>::findNearestNode(const kg::Node<T>& node,
+                                    const Matrix<kg::Node<T>>& map) -> kg::Node<T>
 {
     const auto rows = map.size();
     const auto cols = map[0].size();
@@ -123,7 +124,8 @@ auto Evaluator<T>::findNearestNode(const kg::Node<T>& node, const Matrix<kg::Nod
 
 template <typename T>
 auto Evaluator<T>::evaluateMap(const std::vector<kg::Node<T>>& source,
-        const Matrix<kg::Node<T>>& map) throw (std::string) -> double
+                                const Matrix<kg::Node<T>>& map)
+                                throw (std::string) -> double
 {
     if ( !isValidArgs(source, map) ) {
         throw std::string("invalid arguments");
