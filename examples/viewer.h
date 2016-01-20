@@ -1,4 +1,6 @@
-#pragma once
+#ifndef KG_VIEWER_H
+#define KG_VIEWER_H
+
 
 #include <string>
 #include <opencv2/core/core.hpp>
@@ -22,3 +24,7 @@ public:
 
 
 }
+
+
+#endif
+
