@@ -25,8 +25,6 @@ class KSOM {
 private:
     using Position = std::tuple<int, int>;
 
-    const bool randomIndex_;
-
     const std::vector<Node<T>> src_;
     const int length_;
     const int dimension_;
@@ -40,6 +38,7 @@ private:
     const int maxIterate_;
     int time_;
 
+    const bool randomIndex_;
     std::mt19937 mt_;
     std::uniform_int_distribution<> randIdx_;
 
