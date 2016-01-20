@@ -45,7 +45,8 @@ enum class SavingType : int {
 
 
 template <typename T>
-void createMapMat(const vector<vector<kg::Node<T>>>& map, int rows, int cols, cv::Mat& image)
+void createMapMat(const vector<vector<kg::Node<T>>>& map,
+        int rows, int cols, cv::Mat& image)
 {
     const auto blockWidth   = matWidth/cols;
     const auto blockHeight  = matHeight/rows;
@@ -54,7 +55,8 @@ void createMapMat(const vector<vector<kg::Node<T>>>& map, int rows, int cols, cv
         for ( auto c = 0; c < cols; c++ ) {
             cv::Point rectPos1(c * blockWidth, r * blockHeight);
             cv::Point rectPos2((c + 1) * blockWidth, (r + 1) * blockHeight);
-            cv::Scalar rectColor(map[r][c][BLUE_IDX], map[r][c][GREEN_IDX], map[r][c][RED_IDX]);
+            cv::Scalar rectColor(map[r][c][BLUE_IDX],
+                    map[r][c][GREEN_IDX], map[r][c][RED_IDX]);
             cv::rectangle(image, rectPos1, rectPos2, rectColor, -1);
         }
     }
@@ -85,7 +87,8 @@ auto fileNameOfMat(SavingType type, const string& suffixNumStr) -> string
 
 
 template <typename T>
-auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node<T>>& map) -> void
+auto evaluateAlpha0(const vector<kg::Node<T>>& source,
+        const kg::Matrix<kg::Node<T>>& map) -> void
 {
     const auto maxIterate       = 500*source.size();
     constexpr auto maxAlpha0    = 1.0;
@@ -99,10 +102,13 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
         auto totalEvaluationValue   = 0.0;
         for ( auto n = 0; n < repeat; n++ ) {
             // create instance of KSOM and compute
-            auto colorSOM       = make_unique<kg::KSOM<T>>(source, map, maxIterate, alpha0, sigma0, false);
-            auto originalMat    = cv::Mat(cv::Size(matWidth, matHeight), CV_8UC3, cv::Scalar::all(0));
+            auto colorSOM       = make_unique<kg::KSOM<T>>(source, map,
+                                    maxIterate, alpha0, sigma0, false);
+            auto originalMat    = cv::Mat(cv::Size(matWidth, matHeight),
+                                    CV_8UC3, cv::Scalar::all(0));
             createMapMat(colorSOM->map(), rows, cols, originalMat);
-            cv::imwrite(fileNameOfMat(SavingType::ORIGINAL, to_string(alpha0)), originalMat);
+            cv::imwrite(fileNameOfMat(SavingType::ORIGINAL,
+                        to_string(alpha0)), originalMat);
 
             auto start      = chrono::system_clock::now();
             colorSOM->compute();
@@ -112,17 +118,21 @@ auto evaluateAlpha0(const vector<kg::Node<T>>& source, const kg::Matrix<kg::Node
 
             auto resultMat  = originalMat.clone();
             createMapMat(colorSOM->map(), rows, cols, resultMat);
-            cv::imwrite(fileNameOfMat(SavingType::RESULT, to_string(alpha0)), resultMat);
+            cv::imwrite(fileNameOfMat(SavingType::RESULT,
+                        to_string(alpha0)), resultMat);
 
             // evaluate map created by KSOM
             auto resultMap          = colorSOM->map();
-            auto evaluationValue    = kg::Evaluator<T>::evaluateMap(source, resultMap);
+            auto evaluationValue    = kg::Evaluator<T>::evaluateMap(source,
+                                        resultMap);
             // cout << n << ": " << evaluationValue << endl;
             totalEvaluationValue += evaluationValue;
         }
 
-        auto meanTime               = static_cast<double>(totalTime)/static_cast<double>(repeat);
-        auto meanEvaluationValue    = static_cast<double>(totalEvaluationValue)/static_cast<double>(repeat);
+        auto meanTime               = static_cast<double>(totalTime)
+                                        /static_cast<double>(repeat);
+        auto meanEvaluationValue    = static_cast<double>(totalEvaluationValue)
+                                        /static_cast<double>(repeat);
         cout << "alpha0: " << alpha0 << " ..." << meanTime << "[ms]" << endl;
         cout << "evaluation value: " << meanEvaluationValue << endl;
         cout << endl;
@@ -161,3 +171,4 @@ int main()
 
     return 0;
 }
+
