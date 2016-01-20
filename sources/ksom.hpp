@@ -48,7 +48,7 @@ private:
     inline auto calcH(double distance, int time) const -> double;
     inline auto calcDistance(const Position& pt1, const Position& pt2) const -> double;
     inline auto calcDistance(const Node<T>& node1,
-            const Node<T>& node2) const -> double;
+                                const Node<T>& node2) const -> double;
     inline auto nextIndex() -> unsigned int;
     inline auto findNearestNode(int idx) const -> Position;
     inline auto learnNode(int idx, const Position& nearestPoint) -> void;
@@ -68,8 +68,9 @@ public:
 
 template <typename T>
 KSOM<T>::KSOM(const std::vector<Node<T>>& src,
-        const std::vector<std::vector<Node<T>>>& map,
-        int maxIterate, double alpha0, double sigma0, bool randomly) throw (std::string)
+                const std::vector<std::vector<Node<T>>>& map,
+                int maxIterate, double alpha0,
+                double sigma0, bool randomly) throw (std::string)
     :randomIndex_(randomly)
     ,src_(src)
     ,length_(src_.size())
