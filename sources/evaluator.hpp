@@ -33,7 +33,8 @@ public:
     auto operator=(const Evaluator<T>& rhs) -> Evaluator<T> = delete;
 
     static auto evaluateMap(const std::vector<kg::Node<T>>& source,
-            const Matrix<kg::Node<T>>& map) throw (std::string) -> double;
+                            const Matrix<kg::Node<T>>& map)
+                            throw (std::string) -> double;
 };
 
 
