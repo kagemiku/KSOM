@@ -25,8 +25,6 @@ class KSOM {
 private:
     using Position = std::tuple<int, int>;
 
-    const bool randomIndex_;
-
     const std::vector<Node<T>> src_;
     const int length_;
     const int dimension_;
@@ -40,6 +38,7 @@ private:
     const int maxIterate_;
     int time_;
 
+    const bool randomIndex_;
     std::mt19937 mt_;
     std::uniform_int_distribution<> randIdx_;
 
@@ -50,8 +49,8 @@ private:
     inline auto calcDistance(const Position& pt1, const Position& pt2) const -> double;
     inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
     inline auto nextIndex() -> unsigned int;
-    inline auto findNearestNode(int idx) const -> std::tuple<int, int>;
-    inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
+    inline auto findNearestNode(int idx) const -> Position;
+    inline auto learnNode(int idx, const Position& nearestPoint) -> void;
 
 public:
     KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map,
