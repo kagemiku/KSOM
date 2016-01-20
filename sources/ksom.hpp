@@ -49,8 +49,8 @@ private:
     inline auto calcDistance(const Position& pt1, const Position& pt2) const -> double;
     inline auto calcDistance(const Node<T>& node1, const Node<T>& node2) const -> double;
     inline auto nextIndex() -> unsigned int;
-    inline auto findNearestNode(int idx) const -> std::tuple<int, int>;
-    inline auto learnNode(int idx, const std::tuple<int, int>& nearestPoint) -> void;
+    inline auto findNearestNode(int idx) const -> Position;
+    inline auto learnNode(int idx, const Position& nearestPoint) -> void;
 
 public:
     KSOM(const std::vector<Node<T>>& src, const std::vector<std::vector<Node<T>>>& map,
