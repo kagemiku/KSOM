@@ -11,15 +11,15 @@ namespace kg {
 
 class Viewer {
 private:
-	const std::string winName_;
+    const std::string winName_;
 
 public:
-	explicit Viewer(const std::string& winName);
+    explicit Viewer(const std::string& winName);
     Viewer(const Viewer& rhs) = delete;
-	~Viewer(void);
+    ~Viewer(void);
     auto operator=(const Viewer& rhs) -> Viewer* = delete;
 
-	auto showMat(const cv::Mat& source, int delay=0) -> void;
+    auto showMat(const cv::Mat& source, int delay=0) -> void;
 };
 
 

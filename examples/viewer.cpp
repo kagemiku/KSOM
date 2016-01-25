@@ -7,9 +7,9 @@ namespace kg {
 
 
 Viewer::Viewer(const std::string& winName)
-	:winName_(winName)
+    :winName_(winName)
 {
-	cv::namedWindow(winName_, cv::WINDOW_AUTOSIZE);
+    cv::namedWindow(winName_, cv::WINDOW_AUTOSIZE);
 }
 
 
@@ -21,8 +21,8 @@ Viewer::~Viewer(void)
 
 auto Viewer::showMat(const cv::Mat& source, int delay) -> void
 {
-	cv::imshow(winName_, source);
-	cv::waitKey(delay);
+    cv::imshow(winName_, source);
+    cv::waitKey(delay);
 }
 
 
